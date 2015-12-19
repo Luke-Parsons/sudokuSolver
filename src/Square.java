@@ -50,8 +50,20 @@ public class Square {
         return Value;
     }
 
+    public Integer getPosition() {
+        return Position;
+    }
+
     public Group getMyQuod() {
         return myQuod;
+    }
+
+    public Group getMyColunm() {
+        return myColunm;
+    }
+
+    public Group getMyRow() {
+        return myRow;
     }
 
     public boolean islockedIn(){
@@ -59,29 +71,46 @@ public class Square {
     }
 
     public void lockedInValue(Integer X){
-        if(this.lockedIn==false) {
-            System.out.println("in lockedInValue(" + X + "): " + Position);
+
+        this.myPuzzzle.UpDateSquares();
+
+        if(this.camGoHere(X)) {
+            System.out.println("\nin lockedInValue(" + X + "): " + Position);
             this.PotentialValues.clear();
             this.lockedIn = true;
             this.Value = X;
 
+            //this.myPuzzzle.upDate();
             this.myColunm.LockedInValue(this);
             this.myRow.LockedInValue(this);
             this.myQuod.LockedInValue(this);
         }
+
     }
 
+    private boolean camGoHere(Integer X){
+        if(this.islockedIn()){return false;}
+        if(this.Value!=null){return false;}
+        System.out.print(" - Square ("+Position+") :Value = "+Value+" : PotentialValues =  "+PotentialValues+ ": X = "+ X  +": this.PotentialValues.contains(X) + "+this.PotentialValues.contains(X) );
+        if(!this.PotentialValues.contains(X)){return false;}
+        return true;
+    }
+    public void upDateMe(){
+        PotentialValues.removeAll(myRow.getValuesLockedIn());
+        PotentialValues.removeAll(myColunm.getValuesLockedIn());
+        PotentialValues.removeAll(myQuod.getValuesLockedIn());
+    }
 
     public void update(Group g) {
-
-        for(Integer i: g.getValuesLockedIn()){
+       /*for(Integer i: g.getValuesLockedIn()){
             if(this.PotentialValues.contains(i)){
-                this.PotentialValues.remove(i);
+                this.PotentialValues.remove(PotentialValues.indexOf(i));
             }
-        }
-
+        }*/
+        PotentialValues.removeAll(g.getValuesLockedIn());
+        upDateMe();
         if(this.PotentialValues.size()==1){
-            Integer ThisSquaresValue = this.PotentialValues.remove(0);
+            Integer ThisSquaresValue = this.PotentialValues.get(0);
             this.lockedInValue(ThisSquaresValue);
         }
 

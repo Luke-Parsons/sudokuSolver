@@ -38,7 +38,7 @@ public class puzzle {
 
 
     private void AllocateSquares(String PuzzleString){
-        PuzzleString = PuzzleString.replace("|","").replace(",","").replace("\n","").replace("-","").replace(" ","X");
+        PuzzleString = PuzzleString.replace("0"," ").replace("|","").replace(",","").replace("+","").replace("\n","").replace("-","").replace(" ","X");
         char[] SquaresCharacters = PuzzleString.toCharArray();
 
         for (int i = 0; i < 9*9 ;i++ ){
@@ -112,20 +112,38 @@ public class puzzle {
     }
 
 
-    public void Solve(){
-     //   while (!isSolved()){
-            this.TheStrategy.SolvePuzzle(this);
-     //   }
+    public puzzle Solve(){
+
+        puzzle out = this.TheStrategy.SolvePuzzle(this);
+       while (!out.isSolved()) {
+
+           // out.upDate();
+           System.out.println("out.isSolved() =" + out.isSolved());
+
+           if (!out.isSolved()) {
+               TheStrategy = new BruteForce();
+               out = this.TheStrategy.SolvePuzzle(this);
+
+           }
+       }
+        return out;
     }
 
     public boolean isSolved(){
         return this.Solved;
     }
 
+    public void UpDateSquares(){
+        for (Square s: mySquare.values()){
+            s.upDateMe();
+        }
+    }
+
     public void upDate(){
         for(Group g : myGroups){
          g.updateSquares();
         }
+
     }
 
 
@@ -133,11 +151,11 @@ public class puzzle {
     public String toString() {
         String out = "";
         for (Integer Position = 0; Position < (9*9); Position++ ){
-            if(Position%9==0&&Position!=0){out = out +" |";}
-            if(Position%9==0){out = out +"\n + - + - + - + - + - + - + - + - + - +\n";}
-            out = out+" | "+mySquare.get(Position);
+            if(Position%9==0&&Position!=0){out = out +"-|";}
+            if(Position%9==0){out = out +"\n-+---+---+---+---+---+---+---+---+---+\n";}
+            out = out+"-|-"+mySquare.get(Position);
         }
-        out = out +" |\n + - + - + - + - + - + - + - + - + - +";
+        out = out +"-|\n-+---+---+---+---+---+---+---+---+---+";
 
         return out;
     }

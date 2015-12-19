@@ -1,31 +1,49 @@
 import java.util.HashMap;
+import java.util.Random;
 import java.util.Vector;
 
 /**
  * Created by Luke Parsons on 14/12/2015.
  */
 public interface strategy {
-    public void SolvePuzzle(puzzle p);
+    public puzzle SolvePuzzle(puzzle puzzle);
 }
 
 class logicalInference implements  strategy{
 
 
     @Override
-    public void SolvePuzzle(puzzle puzzle) {
-        for (Square s: puzzle.getMySquare().values()){
-            HashBlockOut(s);
+    public puzzle SolvePuzzle(puzzle puzzle) {
+        while (true){
+            String oldPuzzle = puzzle.toString();
+            puzzle.getMySquare().values().forEach(this::HashBlockOut);
+            puzzle.getMySquare().values().forEach(this::ColumnBlockOut);
+            puzzle.getMySquare().values().forEach(this::RowBlockOut);
+            if(puzzle.toString().equals(oldPuzzle)){break;}
         }
+        return puzzle;
     }
 
     private void HashBlockOut(Square square){
+        BlockOut(square,square.getMyQuod());
+    }
+
+    private void ColumnBlockOut(Square square){
+        BlockOut(square,square.getMyColunm());
+    }
+
+    private void RowBlockOut(Square square){
+        BlockOut(square,square.getMyRow());
+    }
+
+    private void BlockOut(Square square, Group group){
         Square s = square;
-        Group sQuod = s.getMyQuod();
+        Group g = group;
 
         HashMap<Integer,Vector<Square>> NumbersCanGoHere = new HashMap<>();
-        for (Integer i : sQuod.getValuesToGet()){
+        for (Integer i : g.getValuesToGet()){
             Vector<Square> SquareWhereICanGo = new Vector<>();
-            for (Square S : sQuod.getMySquares()){
+            for (Square S : g.getMySquares()){
                 if(S.getPotentialValues().contains(i)){
                     SquareWhereICanGo.add(S);
                 }
@@ -41,23 +59,53 @@ class logicalInference implements  strategy{
     }
 
 
-
-    private Square GetNextEmptySquare(puzzle puzzle){
-        for (Integer i:puzzle.getMySquare().keySet()){
-            Square s = puzzle.getMySquare().get(i);
-            if(!s.islockedIn()){return s;}
-        }
-        return null;
-    }
-
 }
+
 
 
 class BruteForce implements  strategy{
 
-    @Override
-    public void SolvePuzzle(puzzle p) {// TODO
+    public puzzle SolvePuzzle(puzzle p) {
+        // p = new logicalInference().SolvePuzzle(p);
+        System.out.println(p.toString());
+        if(getNextEmptySquare(p)==null){return  p;}
+        if(getNextEmptySquare(p).getPotentialValues().size()==0){return p;}
+        else {
+            for (Integer i : getNextEmptySquare(p).getPotentialValues()){
+             puzzle newPuzzle = new puzzle(new logicalInference(),p.toString()) ;
+             Square s = getNextEmptySquare(newPuzzle);
+             if(s != null){  s.lockedInValue(i);}
+             if(newPuzzle.isSolved()){System.out.println("hi ");return newPuzzle;}
+             else{
+                 return SolvePuzzle(newPuzzle);
+             }
+
+            }
+           return p;
+        }
+
 
     }
+
+    private Square getRadodmEmptySquare(puzzle puzzle){
+        Vector<Square> EmptySquare = new Vector<>();
+        for(Square s: puzzle.getMySquare().values()){
+            if(!s.islockedIn()){EmptySquare.add(s);}
+        }
+        Random r = new Random();
+        return EmptySquare.get(r.nextInt(EmptySquare.size()-1));
+    }
+
+    private Square getNextEmptySquare(puzzle puzzle){
+        for(Integer i: puzzle.getMySquare().keySet()){
+            Square s = puzzle.getMySquare().get(i);
+            if(!s.islockedIn()){
+                System.out.println("returning Square "+s.getValue()+" @ "+s.getPosition());
+                return s;}
+        }
+        return null;
+    }
+
+
 
 }
