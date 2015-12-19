@@ -6,7 +6,7 @@ import java.util.Vector;
  * Created by Luke Parsons on 14/12/2015.
  */
 public interface strategy {
-    public puzzle SolvePuzzle(puzzle puzzle);
+    puzzle SolvePuzzle(puzzle puzzle);
 }
 
 class logicalInference implements  strategy{
@@ -64,20 +64,23 @@ class logicalInference implements  strategy{
 
 
 class BruteForce implements  strategy{
-
+    public static Integer numOfProps = 0;
     public puzzle SolvePuzzle(puzzle p) {
-        // p = new logicalInference().SolvePuzzle(p);
-        System.out.println(p.toString());
+        numOfProps++;
+        p = new logicalInference().SolvePuzzle(p);
+        //System.out.println("prop "+numOfProps+" "+p.toString());
         if(getNextEmptySquare(p)==null){return  p;}
-        if(getNextEmptySquare(p).getPotentialValues().size()==0){return p;}
+        else if(getNextEmptySquare(p).getPotentialValues().size()==0){return p;}
         else {
             for (Integer i : getNextEmptySquare(p).getPotentialValues()){
              puzzle newPuzzle = new puzzle(new logicalInference(),p.toString()) ;
              Square s = getNextEmptySquare(newPuzzle);
-             if(s != null){  s.lockedInValue(i);}
-             if(newPuzzle.isSolved()){System.out.println("hi ");return newPuzzle;}
+             if(s != null){s.lockedInValue(i);}
+             if(newPuzzle.isSolved()){//System.out.println("isSolved()");
+                 return newPuzzle;}
              else{
-                 return SolvePuzzle(newPuzzle);
+                 puzzle X = SolvePuzzle(newPuzzle);
+                 if(X.isSolved()){return X;}
              }
 
             }
@@ -100,7 +103,7 @@ class BruteForce implements  strategy{
         for(Integer i: puzzle.getMySquare().keySet()){
             Square s = puzzle.getMySquare().get(i);
             if(!s.islockedIn()){
-                System.out.println("returning Square "+s.getValue()+" @ "+s.getPosition());
+                //System.out.println("returning Square "+s.getValue()+" @ "+s.getPosition());
                 return s;}
         }
         return null;

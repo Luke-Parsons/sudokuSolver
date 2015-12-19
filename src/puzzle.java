@@ -115,17 +115,15 @@ public class puzzle {
     public puzzle Solve(){
 
         puzzle out = this.TheStrategy.SolvePuzzle(this);
-       while (!out.isSolved()) {
 
-           // out.upDate();
-           System.out.println("out.isSolved() =" + out.isSolved());
+           //System.out.println("out.isSolved() = " + out.isSolved());
 
            if (!out.isSolved()) {
                TheStrategy = new BruteForce();
                out = this.TheStrategy.SolvePuzzle(this);
 
            }
-       }
+
         return out;
     }
 
@@ -144,6 +142,20 @@ public class puzzle {
          g.updateSquares();
         }
 
+    }
+
+    public static String getDespayString(String s){
+        String out = "";
+       String PuzzleString = s.replace("0"," ").replace("|","").replace(",","").replace("+","").replace("\n","").replace("-","").replace(" "," ");
+        int i = 0;
+       for (Character c: PuzzleString.toCharArray()){
+           i++;
+           out += c+" ";
+           if(i%3==0){out+=" ";}
+           if (i%(9)==0){out+="\n";}
+           if (i%(9*3)==0){out+="\n";}
+       }
+        return out;
     }
 
 

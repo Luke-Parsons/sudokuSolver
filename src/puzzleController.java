@@ -28,15 +28,15 @@ public class puzzleController {
                               " 1 436 5 ";
 
         String PuzzleString2 =
+                        "|9|8|7|6|5|1| | | |" +
+                        "| | | | | | | | | |" +
+                        "| | | | | | |1| | |" +
                         "| | | | | | | | | |" +
                         "| | | | | | | | | |" +
+                        "| | | | | | | |1| |" +
+                        "| |2| | | | | | | |" +
                         "| | | | | | | | | |" +
-                        "| | | | | | | | | |" +
-                        "| | | | | | | | | |" +
-                        "| | | | | | | | | |" +
-                        "| | | | | | | | | |" +
-                        "| | | | | | | | | |" +
-                        "| | | | | | | | | |" ;
+                        "| | | | | | | | |1|" ;
 
 
         String reallyHard = "0,0,0,0,0,0,0,0,0,\n" +
@@ -61,7 +61,7 @@ public class puzzleController {
                 "0,9,0,0,0,0,4,0,0";
 
 
-        String WorldsHardest2 = "1,0,0,0,0,7,0,9,0,\n" +
+        String WorldsHardest1 = "1,0,0,0,0,7,0,9,0,\n" +
                 "0,3,0,0,2,0,0,0,8,\n" +
                 "0,0,9,6,0,0,5,0,0,\n" +
                 "0,0,5,3,0,0,9,0,0,\n" +
@@ -70,6 +70,26 @@ public class puzzleController {
                 "3,0,0,0,0,0,0,1,0,\n" +
                 "0,4,0,0,0,0,0,0,7,\n" +
                 "0,0,7,0,0,0,3,0,0";
+
+        String WorldsHardest2 = "005300000" +
+                "800000020" +
+                "070010500" +
+                "400005300" +
+                "010070006" +
+                "003200080" +
+                "060500009" +
+                "004000030" +
+                "000009700";
+
+        String WorldsHardest3 = "800000000" +
+                "003600000" +
+                "070090200" +
+                "050007000" +
+                "000045700" +
+                "000100030" +
+                "001000068" +
+                "008500010" +
+                "090000400";
 
         String websudokucom = "0,7,0,3,0,2,0,0,0,\n" +
                 "8,0,0,0,0,0,1,0,4,\n" +
@@ -102,15 +122,19 @@ public class puzzleController {
                            " | 72 | 73 | 74 | 75 | 76 | 77 | 78 | 79 | 80 |\n" ;
 
 
-        puzzle p = new puzzle(new logicalInference(), PuzzleString2);
+        puzzle p = new puzzle(new logicalInference(), WorldsHardest3);
         System.out.print(p.toString()+"\n\n");
 
         long a = System.currentTimeMillis();
         p = p.Solve();
         long b = System.currentTimeMillis();
 
+
         System.out.print(p);
-        System.out.println("\n\nin = "+(b-a)+" mills.");
+        System.out.println("\n\nin = "+(b-a)+" mills. and with "+BruteForce.numOfProps+" probs.");
+
+
+        System.out.print(puzzle.getDespayString(p.toString()));
         //puzzleController Controller = new puzzleController("Filename");
         //System.out.println(Controller.SolvePuzzle());
     }
