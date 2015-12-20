@@ -3,18 +3,6 @@
  */
 public class puzzleController {
 
-    private String fileName;
-
-    public puzzleController(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public String SolvePuzzle(){
-        return "hi";
-    }
-
-
-
     public static void main(String[] args) {
 
         String PuzzleString = " 2 178 3 " +
@@ -102,6 +90,16 @@ public class puzzleController {
                 "0,0,0,6,0,7,0,8,0";
 
 
+        String PuzzleString3 = "000030800" +
+                "765000000" +
+                "004590000" +
+                "090000006" +
+                "002701300" +
+                "400000070" +
+                "000026400" +
+                "000000531" +
+                "003040000";
+
         String s =
                            " |  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |\n" +
                            "                |              |                 "+
@@ -122,21 +120,18 @@ public class puzzleController {
                            " | 72 | 73 | 74 | 75 | 76 | 77 | 78 | 79 | 80 |\n" ;
 
 
-        puzzle p = new puzzle(new logicalInference(), WorldsHardest3);
+        puzzle p = new puzzle(new logicalInference(), reallyHard);
         System.out.print(p.toString()+"\n\n");
 
         long a = System.currentTimeMillis();
         p = p.Solve();
         long b = System.currentTimeMillis();
 
-
         System.out.print(p);
         System.out.println("\n\nin = "+(b-a)+" mills. and with "+BruteForce.numOfProps+" probs.");
 
-
         System.out.print(puzzle.getDespayString(p.toString()));
-        //puzzleController Controller = new puzzleController("Filename");
-        //System.out.println(Controller.SolvePuzzle());
+
     }
 
 

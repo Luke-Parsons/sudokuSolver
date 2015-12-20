@@ -10,7 +10,6 @@ public class Square {
 
     private puzzle myPuzzzle;
     private boolean lockedIn;
-    private Integer Position;
     private Integer Value;
     private Vector<Integer> PotentialValues;
     private Group myColunm;
@@ -18,9 +17,8 @@ public class Square {
     private Group myQuod;
 
 
-    public Square(Integer position, puzzle puzzle){
+    public Square(puzzle puzzle){
         this.myPuzzzle = puzzle;
-        this.Position = position;
         this.lockedIn = false;
 
         Integer[] VTG = new Integer[]{1,2,3,4,5,6,7,8,9};
@@ -45,13 +43,8 @@ public class Square {
         this.myQuod = myQuod;
     }
 
-
     public Integer getValue() {
         return Value;
-    }
-
-    public Integer getPosition() {
-        return Position;
     }
 
     public Group getMyQuod() {
@@ -75,23 +68,21 @@ public class Square {
         this.myPuzzzle.UpDateSquares();
 
         if(this.camGoHere(X)) {
-            //System.out.println("in lockedInValue(" + X + "): " + Position);
+
             this.PotentialValues.clear();
             this.lockedIn = true;
             this.Value = X;
 
-            //this.myPuzzzle.upDate();
             this.myColunm.LockedInValue(this);
             this.myRow.LockedInValue(this);
             this.myQuod.LockedInValue(this);
-        }
+       }
 
     }
 
     private boolean camGoHere(Integer X){
         if(this.islockedIn()){return false;}
         if(this.Value!=null){return false;}
-        //System.out.print(" - Square ("+Position+") :Value = "+Value+" : PotentialValues =  "+PotentialValues+ ": X = "+ X  +": this.PotentialValues.contains(X) + "+this.PotentialValues.contains(X)+"\n" );
         if(!this.PotentialValues.contains(X)){return false;}
         return true;
     }
