@@ -1,4 +1,3 @@
-package cool.b166er;
 
 import java.util.Arrays;
 import java.util.Vector;
@@ -6,18 +5,18 @@ import java.util.Vector;
 /**
  * Created by Luke Parsons on 14/12/2015.
  */
-public class Square {
+public class square {
 
   private puzzle myPuzzzle;
   private boolean lockedIn;
   private Integer Value;
   private Vector<Integer> PotentialValues;
-  private Group myColunm;
-  private Group myRow;
-  private Group myQuod;
+  private group myColunm;
+  private group myRow;
+  private group myQuod;
 
 
-  public Square(puzzle puzzle) {
+  public square(puzzle puzzle) {
     this.myPuzzzle = puzzle;
     this.lockedIn = false;
 
@@ -31,15 +30,15 @@ public class Square {
     return PotentialValues;
   }
 
-  public void setMyRow(Group myRow) {
+  public void setMyRow(group myRow) {
     this.myRow = myRow;
   }
 
-  public void setMyColunm(Group myColunm) {
+  public void setMyColunm(group myColunm) {
     this.myColunm = myColunm;
   }
 
-  public void setMyQuod(Group myQuod) {
+  public void setMyQuod(group myQuod) {
     this.myQuod = myQuod;
   }
 
@@ -47,15 +46,15 @@ public class Square {
     return Value;
   }
 
-  public Group getMyQuod() {
+  public group getMyQuod() {
     return myQuod;
   }
 
-  public Group getMyColunm() {
+  public group getMyColunm() {
     return myColunm;
   }
 
-  public Group getMyRow() {
+  public group getMyRow() {
     return myRow;
   }
 
@@ -99,7 +98,7 @@ public class Square {
     PotentialValues.removeAll(myQuod.getValuesLockedIn());
   }
 
-  public void update(Group g) {
+  public void update(group g) {
     PotentialValues.removeAll(g.getValuesLockedIn());
     upDateMe();
     if (this.PotentialValues.size() == 1) {

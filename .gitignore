@@ -1,5 +1,3 @@
-Application.java
 
-.idea/
-App/target/
+.idea*
 *.iml

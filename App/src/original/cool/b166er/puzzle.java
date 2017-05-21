@@ -1,6 +1,6 @@
-package cool.b166er;
-
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Vector;
 
 /**
  * Created by Luke Parsons on 14/12/2015.
@@ -9,9 +9,9 @@ public class puzzle {
 
   private strategy TheStrategy;
   private boolean Solved;
-  private Vector<Group> myGroups;
-  private HashMap<Integer, Square> mySquare;
-  private Vector<Group> CompleteGroups;
+  private Vector<group> myGroups;
+  private HashMap<Integer, square> mySquare;
+  private Vector<group> CompleteGroups;
 
   public puzzle(strategy theStrategy, String PuzzleString) {
     this.mySquare = new HashMap<>();
@@ -27,13 +27,13 @@ public class puzzle {
     this.upDate();
   }
 
-  public HashMap<Integer, Square> getMySquare() {
+  public HashMap<Integer, square> getMySquare() {
     return mySquare;
   }
 
   private void makeSquares() {
     for (int i = 0; i < 9 * 9; i++) {
-      Square s = new Square(this);
+      square s = new square(this);
       mySquare.put(i, s);
     }
   }
@@ -45,7 +45,7 @@ public class puzzle {
 
     char[] SquaresCharacters = PuzzleString.toCharArray();
     for (int i = 0; i < 9 * 9; i++) {
-      Square s = mySquare.get(i);
+      square s = mySquare.get(i);
       if (SquaresCharacters[i] != 'X') {
         s.lockedInValue(Integer.parseInt(SquaresCharacters[i] + ""));
       }
@@ -57,10 +57,10 @@ public class puzzle {
   private void AllocateGroups() {
     for (int x = 0; x < 9; x++) {
 
-      Group Colunm = new Group(this);
+      group Colunm = new group(this);
       for (int c = 0 + x; c < 9 * 9; c += 9) {
         Colunm.register(mySquare.get(c));
-        Square s = mySquare.get(c);
+        square s = mySquare.get(c);
         s.setMyColunm(Colunm);
         if (s.islockedIn()) {
           Colunm.LockedInValue(s);
@@ -68,10 +68,10 @@ public class puzzle {
       }
       register(Colunm);
 
-      Group Row = new Group(this);
+      group Row = new group(this);
       for (int r = x * 9; r < (x * 9) + 9; r++) {
         Row.register(mySquare.get(r));
-        Square s = mySquare.get(r);
+        square s = mySquare.get(r);
         s.setMyRow(Row);
         if (s.islockedIn()) {
           Row.LockedInValue(s);
@@ -84,10 +84,10 @@ public class puzzle {
     Vector<Integer> g =
         new Vector<>(Arrays.asList(new Integer[]{ 0, 3, 6, 27, 30, 33, 60, 63, 66 }));
     for (int i : g) {
-      Group quod = new Group(this);
+      group quod = new group(this);
       for (int Index : getBoxIndexs(i)) {
         quod.register(mySquare.get(Index));
-        Square s = mySquare.get(Index);
+        square s = mySquare.get(Index);
         s.setMyQuod(quod);
         if (s.islockedIn()) {
           quod.LockedInValue(s);
@@ -117,12 +117,12 @@ public class puzzle {
   }
 
 
-  public void register(Group g) {
+  public void register(group g) {
     this.myGroups.add(g);
   }
 
 
-  public void LockInGroup(Group g) {
+  public void LockInGroup(group g) {
     CompleteGroups.add(g);
     if (CompleteGroups.size() == 27) {
       Solved = true;
@@ -146,13 +146,13 @@ public class puzzle {
   }
 
   public void UpDateSquares() {
-    for (Square s : mySquare.values()) {
+    for (square s : mySquare.values()) {
       s.upDateMe();
     }
   }
 
   public void upDate() {
-    for (Group g : myGroups) {
+    for (group g : myGroups) {
       g.updateSquares();
     }
 

@@ -1,5 +1,3 @@
-package cool.b166er;
-
 /**
  * Created by Luke Parsons on 14/12/2015.
  */

@@ -24,26 +24,26 @@ class logicalInference implements  strategy{
         return puzzle;
     }
 
-    private void HashBlockOut(Square square){
+    private void HashBlockOut(square square){
         BlockOut(square,square.getMyQuod());
     }
 
-    private void ColumnBlockOut(Square square){
+    private void ColumnBlockOut(square square){
         BlockOut(square,square.getMyColunm());
     }
 
-    private void RowBlockOut(Square square){
+    private void RowBlockOut(square square){
         BlockOut(square,square.getMyRow());
     }
 
-    private void BlockOut(Square square, Group group){
-        Square s = square;
-        Group g = group;
+    private void BlockOut(square square, group group){
+        square s = square;
+        group g = group;
 
-        HashMap<Integer,Vector<Square>> NumbersCanGoHere = new HashMap<>();
+        HashMap<Integer,Vector<square>> NumbersCanGoHere = new HashMap<>();
         for (Integer i : g.getValuesToGet()){
-            Vector<Square> SquareWhereICanGo = new Vector<>();
-            for (Square S : g.getMySquares()){
+            Vector<square> SquareWhereICanGo = new Vector<>();
+            for (square S : g.getMySquares()){
                 if(S.getPotentialValues().contains(i)){
                     SquareWhereICanGo.add(S);
                 }
@@ -74,7 +74,7 @@ class BruteForce implements  strategy{
         else {
             for (Integer i : getNextEmptySquare(p).getPotentialValues()){
              puzzle newPuzzle = new puzzle(new logicalInference(),p.toString()) ;
-             Square s = getNextEmptySquare(newPuzzle);
+             square s = getNextEmptySquare(newPuzzle);
              if(s != null){s.lockedInValue(i);}
              if(newPuzzle.isSolved()){//System.out.println("isSolved()");
                  return newPuzzle;}
@@ -90,20 +90,20 @@ class BruteForce implements  strategy{
 
     }
 
-    private Square getRadodmEmptySquare(puzzle puzzle){
-        Vector<Square> EmptySquare = new Vector<>();
-        for(Square s: puzzle.getMySquare().values()){
+    private square getRadodmEmptySquare(puzzle puzzle){
+        Vector<square> EmptySquare = new Vector<>();
+        for(square s: puzzle.getMySquare().values()){
             if(!s.islockedIn()){EmptySquare.add(s);}
         }
         Random r = new Random();
         return EmptySquare.get(r.nextInt(EmptySquare.size()-1));
     }
 
-    private Square getNextEmptySquare(puzzle puzzle){
+    private square getNextEmptySquare(puzzle puzzle){
         for(Integer i: puzzle.getMySquare().keySet()){
-            Square s = puzzle.getMySquare().get(i);
+            square s = puzzle.getMySquare().get(i);
             if(!s.islockedIn()){
-                //System.out.println("returning Square "+s.getValue()+" @ "+s.getPosition());
+                //System.out.println("returning square "+s.getValue()+" @ "+s.getPosition());
                 return s;}
         }
         return null;
