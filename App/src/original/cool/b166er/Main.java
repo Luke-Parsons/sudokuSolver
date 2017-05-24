@@ -1,5 +1,3 @@
-package java.cool.b166er;
-
 /**
  * Created by Luke Parsons on 14/12/2015.
  * @author luke parsons
