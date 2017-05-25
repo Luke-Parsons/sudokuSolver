@@ -114,6 +114,11 @@
             <artifactId>logback-ext-loggly</artifactId>
             <version>0.1.2</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.collections</groupId>
+            <artifactId>google-collections</artifactId>
+            <version>1.0</version>
+        </dependency>
         <!--<dependency>-->
         <!--<groupId>ch.qos.logback</groupId>-->
         <!--<artifactId>logback-classic</artifactId>-->

@@ -12,7 +12,7 @@ public class Square {
   private Integer value = null;
 
   private Position position;
-  private Strategy strategy;
+  private Set<Strategy> strategys;
 
   private Zone row;
   private Zone column;
@@ -20,11 +20,11 @@ public class Square {
 
   private boolean hasBeenSet = false;
 
-  public Square(Integer value, Position position, Strategy strategy, Zone row, Zone column,
+  public Square(Integer value, Position position, Set<Strategy> strategys, Zone row, Zone column,
       Zone group) {
     this.value = value;
     this.position = position;
-    this.strategy = strategy;
+    this.strategys = strategys;
     this.row = row;
     this.column = column;
     this.group = group;
@@ -44,16 +44,7 @@ public class Square {
   }
 
   public void update() {
-    if (value != null) {
-      return;
-    }
-
-    //    lastSquareLeft();
-
-    //    if (value != null) {
-    //      return;
-    //    }
-    strategy.solve(this);
+   strategys.forEach(strategy -> strategy.solve(this));
   }
 
   public Set<Integer> getPotentialValues() {
@@ -86,8 +77,8 @@ public class Square {
     return group.getMissingValues();
   }
 
-  public Strategy getStrategy() {
-    return strategy;
+  public Set<Strategy> getStrategys() {
+    return strategys;
   }
 
   public Zone getRow() {

@@ -13,18 +13,22 @@ public class BlockOut implements Strategy {
   @Override
   public void solve(Square square) {
 
-    if (square.getValue() == null) {
-      Set<Integer> potentialInTheAllOtherSquares = new HashSet<>();
-      List<Square> otherSquaresInThisGroup = square.getGroup().getOtherSquaresInThisGroup(square);
-      otherSquaresInThisGroup.forEach(s -> potentialInTheAllOtherSquares.addAll(s.getPotentialValues()));
+    if (square.getValue() != null) {
+      return;
+    }
+    Set<Integer> potentialInTheAllOtherSquares = new HashSet<>();
+    List<Square> otherSquaresInThisGroup = square.getGroup().getOtherSquaresInThisGroup(square);
+    otherSquaresInThisGroup
+        .forEach(s -> potentialInTheAllOtherSquares.addAll(s.getPotentialValues()));
 
-      Set<Integer> potentialValuesForSquare = square.getPotentialValues();
+    Set<Integer> potentialValuesForSquare = square.getPotentialValues();
 
-      for (Integer value : square.getGroup().getMissingValues()) {
-        if (potentialValuesForSquare.contains(value) && !potentialInTheAllOtherSquares.contains(value)) {
-          square.setValue(value);
-        }
+    for (Integer value : square.getGroup().getMissingValues()) {
+      if (potentialValuesForSquare.contains(value) && !potentialInTheAllOtherSquares
+          .contains(value)) {
+        square.setValue(value);
       }
     }
+
   }
 }
