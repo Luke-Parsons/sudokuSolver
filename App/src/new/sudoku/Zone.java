@@ -1,9 +1,7 @@
 package sudoku;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -59,20 +57,20 @@ public abstract class Zone {
     return values;
   }
 
-  public List<Square> getOtherSquaresInThisGroup(Square square) {
-    List<Square> values = new ArrayList<>(map.values());
+  public Set<Square> getOtherSquaresInThisZone(Square square) {
+    Set<Square> values = new HashSet<>(map.values());
     values.remove(square);
     return values;
   }
 
-  public List<Square> getOtherSquaresInGroup(Group group, Square square) {
-    List<Square> squaresInGroup = getSquaresInGroup(group);
+  public Set<Square> getOtherSquaresInGroup(Group group, Square square) {
+    Set<Square> squaresInGroup = getSquaresInGroup(group);
     squaresInGroup.remove(square);
     return squaresInGroup;
   }
 
-  public List<Square> getSquaresInGroup(Group group) {
-    List<Square> squares = new ArrayList<>();
+  public Set<Square> getSquaresInGroup(Group group) {
+    Set<Square> squares = new HashSet<>();
     for (Square square : map.values()) {
       if (group.contains(square)) {
         squares.add(square);

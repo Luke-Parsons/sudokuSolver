@@ -13,35 +13,35 @@ public class PuzzleBuilder {
 
   public static Puzzle Build(String puzzleString, Set<Strategy> strategys) {
 
-    Zone r1 = new Row();
-    Zone r2 = new Row();
-    Zone r3 = new Row();
-    Zone r4 = new Row();
-    Zone r5 = new Row();
-    Zone r6 = new Row();
-    Zone r7 = new Row();
-    Zone r8 = new Row();
-    Zone r9 = new Row();
+    Row r1 = new Row();
+    Row r2 = new Row();
+    Row r3 = new Row();
+    Row r4 = new Row();
+    Row r5 = new Row();
+    Row r6 = new Row();
+    Row r7 = new Row();
+    Row r8 = new Row();
+    Row r9 = new Row();
 
-    Zone c1 = new Column();
-    Zone c2 = new Column();
-    Zone c3 = new Column();
-    Zone c4 = new Column();
-    Zone c5 = new Column();
-    Zone c6 = new Column();
-    Zone c7 = new Column();
-    Zone c8 = new Column();
-    Zone c9 = new Column();
+    Column c1 = new Column();
+    Column c2 = new Column();
+    Column c3 = new Column();
+    Column c4 = new Column();
+    Column c5 = new Column();
+    Column c6 = new Column();
+    Column c7 = new Column();
+    Column c8 = new Column();
+    Column c9 = new Column();
 
-    Zone g1 = new Group();
-    Zone g2 = new Group();
-    Zone g3 = new Group();
-    Zone g4 = new Group();
-    Zone g5 = new Group();
-    Zone g6 = new Group();
-    Zone g7 = new Group();
-    Zone g8 = new Group();
-    Zone g9 = new Group();
+    Group g1 = new Group();
+    Group g2 = new Group();
+    Group g3 = new Group();
+    Group g4 = new Group();
+    Group g5 = new Group();
+    Group g6 = new Group();
+    Group g7 = new Group();
+    Group g8 = new Group();
+    Group g9 = new Group();
 
     List<String> strings = Arrays.asList(puzzleString.split(","));
     if (strings.size() != 81){
@@ -160,7 +160,7 @@ public class PuzzleBuilder {
 
   private static Square getSquare(String valueString, Integer positionInPuzzle,  Integer
       positionInRow,
-      Integer positionInColumn, Integer positionIngroup, Zone row, Zone column, Zone group,
+      Integer positionInColumn, Integer positionIngroup, Row row, Column column, Group group,
       Set<Strategy> strategys) {
 
     Integer value = getValue(valueString);

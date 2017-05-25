@@ -1,6 +1,5 @@
 package sudoku;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -14,14 +13,14 @@ public class Square {
   private Position position;
   private Set<Strategy> strategys;
 
-  private Zone row;
-  private Zone column;
-  private Zone group;
+  private Row row;
+  private Column column;
+  private Group group;
 
   private boolean hasBeenSet = false;
 
-  public Square(Integer value, Position position, Set<Strategy> strategys, Zone row, Zone column,
-      Zone group) {
+  public Square(Integer value, Position position, Set<Strategy> strategys, Row row, Column column,
+      Group group) {
     this.value = value;
     this.position = position;
     this.strategys = strategys;
@@ -47,24 +46,6 @@ public class Square {
    strategys.forEach(strategy -> strategy.solve(this));
   }
 
-  public Set<Integer> getPotentialValues() {
-    Set<Integer> values = new HashSet<>();
-    values.add(1);
-    values.add(2);
-    values.add(3);
-    values.add(4);
-    values.add(5);
-    values.add(6);
-    values.add(7);
-    values.add(8);
-    values.add(9);
-
-    values.removeAll(row.getValues());
-    values.removeAll(column.getValues());
-    values.removeAll(group.getValues());
-    return values;
-  }
-
   public Set<Integer> getRowPotentialValues() {
     return row.getMissingValues();
   }
@@ -81,11 +62,11 @@ public class Square {
     return strategys;
   }
 
-  public Zone getRow() {
+  public Row getRow() {
     return row;
   }
 
-  public Zone getColumn() {
+  public Column getColumn() {
     return column;
   }
 
