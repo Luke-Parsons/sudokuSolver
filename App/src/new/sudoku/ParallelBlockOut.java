@@ -80,14 +80,10 @@ public class ParallelBlockOut implements Strategy {
   }
 
   private static Set<Square> getAdjacentSquaresInRow(Square square) {
-    Set<Square> otherSquaresInGroup =
-        square.getRow().getOtherSquaresInGroup(square.getGroup(), square);
-    return otherSquaresInGroup;
+    return square.getRow().getOtherSquaresInGroup(square.getGroup(), square);
   }
 
   private static Set<Square> getAdjacentSquaresInColumn(Square square) {
-    Set<Square> otherSquaresInGroup =
-        square.getColumn().getOtherSquaresInGroup(square.getGroup(), square);
-    return otherSquaresInGroup;
+    return square.getColumn().getOtherSquaresInGroup(square.getGroup(), square);
   }
 }
