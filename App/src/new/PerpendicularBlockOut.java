@@ -7,6 +7,6 @@
 public class PerpendicularBlockOut implements Strategy {
   @Override
   public void solve(Square square) {
-
+    // todo
   }
 }
