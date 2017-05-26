@@ -1,10 +1,5 @@
 import com.google.common.collect.Sets;
 
-import sudoku.ParallelBlockOut;
-import sudoku.LastOneLeft;
-import sudoku.Puzzle;
-import sudoku.PuzzleBuilder;
-
 /**
  * Created by 
  * @author luke on 23/05/2017.

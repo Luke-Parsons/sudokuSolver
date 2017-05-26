@@ -1,6 +1,4 @@
-package sudoku;
 
-import sudoku.Square;
 
 /**
  * Created by 

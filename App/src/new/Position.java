@@ -1,4 +1,3 @@
-package sudoku;
 
 /**
  * Created by 
