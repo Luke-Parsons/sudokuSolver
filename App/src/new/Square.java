@@ -1,5 +1,3 @@
-import java.util.Set;
-
 /**
  * Created by 
  * @author luke on 21/05/2017.
@@ -9,7 +7,6 @@ public class Square {
   private Integer value = null;
 
   private Position position;
-  private Set<SquareStrategy> squareStrategies;
 
   private Row row;
   private Column column;
@@ -17,31 +14,39 @@ public class Square {
 
   private Colour colour = Colour.BLANK;
 
-  public Square(Integer value, Position position, Set<SquareStrategy> squareStrategies, Row row,
-      Column column, Group group) {
+  public Square(Integer value, Position position, Row row, Column column, Group group) {
     this.value = value;
     this.position = position;
-    this.squareStrategies = squareStrategies;
     this.row = row;
     this.column = column;
     this.group = group;
   }
 
-  public void resetValue(Colour colour){
+  public void resetValue(Colour colour) {
     this.value = null;
     this.colour = colour;
   }
 
-  public void setValue(Integer value,Colour colour) {
+  public void setValue(Integer value) {
+    this.value = value;
+  }
 
-    if (!StrategyHelper.canValueGoInSquare(value,this)){
+  public void setValue(Integer value, Colour colour) {
+
+    if (!StrategyHelper.canValueGoInSquare(value, this)) {
       this.colour = Colour.HIGHLIGHTED;
       throw new IllegalArgumentException("strategy has made a mistake");
     }
-
     this.value = value;
     this.colour = colour;
+  }
 
+  public void setColour(Colour colour) {
+    this.colour = colour;
+  }
+
+  public Colour getColour() {
+    return colour;
   }
 
   public Position getPosition() {
@@ -50,26 +55,6 @@ public class Square {
 
   public Integer getValue() {
     return value;
-  }
-
-  public void update() {
-    squareStrategies.forEach(strategy -> strategy.solve(this));
-  }
-
-  public Set<Integer> getRowPotentialValues() {
-    return row.getMissingValues();
-  }
-
-  public Set<Integer> getColumnValues() {
-    return column.getMissingValues();
-  }
-
-  public Set<Integer> getGroupValues() {
-    return group.getMissingValues();
-  }
-
-  public Set<SquareStrategy> getSquareStrategies() {
-    return squareStrategies;
   }
 
   public Row getRow() {

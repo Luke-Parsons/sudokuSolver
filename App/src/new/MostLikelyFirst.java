@@ -4,11 +4,13 @@
  *
  * the same as BruteForce but the Set squares are sorted by valuesNotEliminated()
  * in this way the puzzle is traversed by most likely Square next, not just by square number
+ *
  */
-public class MostLikelyFirst implements SpeedFactor {
+public class MostLikelyFirst implements PuzzleStrategy {
 
   @Override
-  public void process(Puzzle puzzle) {
+  public void solve(Puzzle puzzle) {
+    // less guess, but generally slows things down because of all of the sorting
     puzzle.getSquares().sort((s1, s2) -> {
       if (s1.theNumOfValuesNotEliminated() < s2.theNumOfValuesNotEliminated()) {
         return -1;

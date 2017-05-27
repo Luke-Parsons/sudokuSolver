@@ -10,16 +10,16 @@ import java.util.Set;
  * in short, it does all it can without guessing
  *
  */
-public class SquareStrategySpeedFactor implements SpeedFactor {
+public class SquareStrategyWrapper implements PuzzleStrategy {
 
   private Set<SquareStrategy> squareStrategies;
 
-  public SquareStrategySpeedFactor(Set<SquareStrategy> squareStrategies) {
+  public SquareStrategyWrapper(Set<SquareStrategy> squareStrategies) {
     this.squareStrategies = squareStrategies;
   }
 
   @Override
-  public void process(Puzzle puzzle) {
+  public void solve(Puzzle puzzle) {
 
     int numberOfSquaresToFill = StrategyHelper.numberOfSquaresToFill(puzzle);
     int numberOfSquaresToFillNow = 0;
@@ -30,6 +30,5 @@ public class SquareStrategySpeedFactor implements SpeedFactor {
       }
       numberOfSquaresToFillNow = StrategyHelper.numberOfSquaresToFill(puzzle);
     }
-    System.out.print(puzzle.toString());
   }
 }

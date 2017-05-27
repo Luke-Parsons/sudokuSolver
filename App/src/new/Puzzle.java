@@ -1,4 +1,6 @@
 
+import com.google.common.collect.Sets;
+
 import java.util.List;
 import java.util.Set;
 
@@ -6,30 +8,41 @@ import java.util.Set;
  * Created by 
  * @author luke on 21/05/2017.
  */
-public class Puzzle {
+public class Puzzle implements Cloneable {
 
   private List<Square> squares;
-  private Set<PuzzleStrategy> puzzleStrategies;
 
   public Puzzle(List<Square> squares) {
     this.squares = squares;
+
   }
 
-  public Puzzle(List<Square> squares, Set<PuzzleStrategy> puzzleStrategies) {
-    this.squares = squares;
-    this.puzzleStrategies = puzzleStrategies;
+  public void solveWithSquareStrategies(SquareStrategy squareStrategy) {
+    SquareStrategyWrapper squareStrategyWrapper =
+        new SquareStrategyWrapper(Sets.newHashSet(squareStrategy));
+    squareStrategyWrapper.solve(this);
   }
 
-  public void solveBySquare() {
-    squares.forEach(Square:: update);
+  public void solveWithSquareStrategies(Set<SquareStrategy> squareStrategies) {
+    SquareStrategyWrapper squareStrategyWrapper =
+        new SquareStrategyWrapper(squareStrategies);
+    squareStrategyWrapper.solve(this);
   }
 
-  public void solveByPuzzle() {
+  public void solveWithPuzzleStrategies(PuzzleStrategy puzzleStrategy) {
+    puzzleStrategy.solve(this);
+  }
+
+  public void solveWithPuzzleStrategies(Set<PuzzleStrategy> puzzleStrategies) {
     puzzleStrategies.forEach(puzzleStrategy -> puzzleStrategy.solve(this));
   }
 
   public List<Square> getSquares() {
     return squares;
+  }
+
+  public void setSquares(List<Square> squares) {
+    this.squares = squares;
   }
 
   public void orderPuzzle(){
@@ -64,4 +77,6 @@ public class Puzzle {
     out.append("------|------|------\n");
     return out.toString() + "\n\n\n\n";
   }
+
+
 }

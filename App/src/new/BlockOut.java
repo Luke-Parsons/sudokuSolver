@@ -15,14 +15,15 @@ public class BlockOut implements SquareStrategy {
       return;
     }
 
+
     Set<Integer> missingValues = square.getGroup().getMissingValues();
 
     Set<Square> otherBlankSquaresInThisZone =
         StrategyHelper.getOtherUnsetSquaresInThisZone(square.getGroup(), square);
 
     for (Integer value : missingValues) {
-      // todo not working
-      if (StrategyHelper.valueIsEliminatedFromAll(value, otherBlankSquaresInThisZone)) {
+      if (StrategyHelper.valueIsEliminatedFromAll(value, otherBlankSquaresInThisZone)
+          && StrategyHelper.valuesNotEliminated(square).contains(value)) {
         square.setValue(value , colour);
       }
     }

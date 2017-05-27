@@ -8,17 +8,20 @@ import java.util.Set;
  */
 public class BruteForce implements PuzzleStrategy {
 
-  private static int NUMBER_OF_GUESS = 0;
-  private static long TIME_TAKEN_SECS = 0;
-
-  private static Set<SpeedFactor> speedFactors;
-
   private static Colour colour = Colour.RED;
+
+  private int NUMBER_OF_GUESS = 0;
+  private long TIME_TAKEN_SECS = 0;
+
+  private Set<SquareStrategy> squareSpeedFactors;
+  private Set<PuzzleStrategy> puzzleSpeedFactors;
 
   public BruteForce() {}
 
-  public BruteForce(Set<SpeedFactor> speedFactors) {
-    this.speedFactors = speedFactors;
+  public BruteForce(Set<SquareStrategy> squareSpeedFactors,
+      Set<PuzzleStrategy> puzzleSpeedFactors) {
+    this.squareSpeedFactors = squareSpeedFactors;
+    this.puzzleSpeedFactors = puzzleSpeedFactors;
   }
 
   @Override
@@ -40,13 +43,20 @@ public class BruteForce implements PuzzleStrategy {
       return puzzle;
     }
 
-    applySpeedFactors(puzzle);
+    Puzzle oldGoodPuzzle = PuzzleBuilder.clone(puzzle);
+
+    applySquareSpeedFactors(puzzle);
+    applyPuzzleSpeedFactors(puzzle);
+
+    if (StrategyHelper.isPuzzleSolved(puzzle)) {
+      return puzzle;
+    }
 
     for (Square square : puzzle.getSquares()) {
       if (square.getValue() != null) {
         continue;
       }
-
+      // got to next empty square
       for (Integer value : Sets.newHashSet(1, 2, 3, 4, 5, 6, 7, 8, 9)) {
         if (StrategyHelper.canValueGoInSquare(value, square)) {
           NUMBER_OF_GUESS++;
@@ -56,22 +66,32 @@ public class BruteForce implements PuzzleStrategy {
           if (StrategyHelper.isPuzzleSolved(puzzle)) {
             return puzzle;
           } else {
+            puzzle = PuzzleBuilder.rollback(puzzle, oldGoodPuzzle);
             square.resetValue(colour);
           }
         }
       }
+      // hit a block
       return puzzle;
     }
     return puzzle;
   }
 
-  private static void applySpeedFactors(Puzzle puzzle) {
-    if (speedFactors != null) {
-      speedFactors.forEach(speedFactor -> speedFactor.process(puzzle));
+  private void applySquareSpeedFactors(Puzzle puzzle) {
+    if (squareSpeedFactors != null) {
+      for (Square square : puzzle.getSquares()) {
+        squareSpeedFactors.forEach(speedFactor -> speedFactor.solve(square));
+      }
     }
   }
 
-  private static void print(Puzzle puzzle) {
+  private void applyPuzzleSpeedFactors(Puzzle puzzle) {
+    if (puzzleSpeedFactors != null) {
+      puzzleSpeedFactors.forEach(puzzleStrategy -> puzzleStrategy.solve(puzzle));
+    }
+  }
+
+  private void print(Puzzle puzzle) {
 
     puzzle.orderPuzzle();
 

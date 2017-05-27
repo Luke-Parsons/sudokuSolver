@@ -21,21 +21,20 @@ public class App {
 
   public static void main(String[] args) throws InterruptedException {
 
-//    SquareStrategySpeedFactor iterativeSquareStrategy =
-    //        new SquareStrategySpeedFactor(Sets.newHashSet(new Elimination(), new BlockOut()));
+    //    SquareStrategyWrapper iterativeSquareStrategy =
+    //        new SquareStrategyWrapper(Sets.newHashSet(new Elimination(), new BlockOut()));
 
-    SquareStrategySpeedFactor squareStrategySpeedFactor =
-        new SquareStrategySpeedFactor(Sets.newHashSet(new BlockOut(), new Elimination()));
+    SquareStrategyWrapper squareStrategyWrapper =
+        new SquareStrategyWrapper(Sets.newHashSet(new Elimination(), new BlockOut()));
+    //    Sets.newHashSet(squareStrategyWrapper)
+    BruteForce bruteForce =
+        new BruteForce(null, Sets.newHashSet( squareStrategyWrapper));
 
-//    Puzzle puzzle = PuzzleBuilder.Build(puzzleString4, null,
-//        Sets.newHashSet(new BruteForce(Sets.newHashSet(squareStrategySpeedFactor))));
-
-    Puzzle puzzle =
-        PuzzleBuilder.Build(puzzleString4, null, Sets.newHashSet(new BruteForce()));
+    Puzzle puzzle = PuzzleBuilder.build(puzzleString4);
 
     try {
-      puzzle.solveByPuzzle();
-    }catch (Exception e){
+      puzzle.solveWithPuzzleStrategies(Sets.newHashSet(bruteForce));
+    } catch (Exception e) {
       System.err.print("ERROR: \n");
       System.out.print(puzzle.toString());
     }
