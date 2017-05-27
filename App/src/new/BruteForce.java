@@ -13,15 +13,11 @@ public class BruteForce implements PuzzleStrategy {
   @Override
   public void solve(Puzzle puzzle) {
 
-    try {
-      puzzle = solveRecursively(puzzle.getSquares());
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-
+    puzzle = solveRecursively(puzzle.getSquares());
+    print(puzzle);
   }
 
-  private Puzzle solveRecursively(List<Square> squares) throws InterruptedException {
+  private Puzzle solveRecursively(List<Square> squares) {
 
     if (StrategyHelper.isPuzzleSolved(squares)) {
       return new Puzzle(squares);
@@ -34,9 +30,8 @@ public class BruteForce implements PuzzleStrategy {
 
       for (Integer value : Sets.newHashSet(1, 2, 3, 4, 5, 6, 7, 8, 9)) {
         if (StrategyHelper.valueCanGoInSquare(value, square)) {
+          NUMBER_OF_GUESS++;
           square.setValue(value);
-
-          print(squares);
 
           Puzzle puzzle = solveRecursively(squares);
           if (puzzle != null) {
@@ -45,18 +40,15 @@ public class BruteForce implements PuzzleStrategy {
             square.setValue(null);
           }
         }
-
       }
       return null;
     }
-
     return null;
   }
 
-  private static void print(List<Square> squares) {
+  private static void print(Puzzle puzzle) {
     NUMBER_OF_GUESS++;
     System.out.print("NUMBER OF GUESS : " + NUMBER_OF_GUESS + "\n");
-    Puzzle puzzle = new Puzzle(squares);
     System.out.print(puzzle.toString());
   }
 
