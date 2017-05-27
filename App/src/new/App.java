@@ -21,17 +21,19 @@ public class App {
 
   public static void main(String[] args) throws InterruptedException {
 
-    Puzzle puzzle = PuzzleBuilder.Build(puzzleString3, Sets.newHashSet(new ParallelBlockOut(),new LastOneLeft()));
-    System.out.println("Interaction : 0");
-    System.out.println(puzzle.toString());
-    int it = 1 ;
-    while (true) {
-      puzzle.solve();
-      System.out.println("Interaction : "+ it);
-      System.out.println(puzzle.toString());
-      it++;
-      Thread.sleep(1000L);
-    }
+    Puzzle puzzle = PuzzleBuilder.Build(puzzleString3,null, Sets.newHashSet(new BruteForce()));
+    puzzle.solveByPuzzle();
+//
+//    System.out.println("Interaction : 0");
+//    System.out.println(puzzle.toString());
+//    int it = 1 ;
+//    while (true) {
+//      puzzle.solveBySquare();
+//      System.out.println("Interaction : "+ it);
+//      System.out.println(puzzle.toString());
+//      it++;
+//      Thread.sleep(1000L);
+//    }
   }
 
 }

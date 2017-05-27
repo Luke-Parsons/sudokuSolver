@@ -1,5 +1,7 @@
 import com.google.common.collect.Sets;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -9,7 +11,7 @@ import java.util.stream.Collectors;
  */
 public abstract class StrategyHelper {
 
-  // Elimination
+  // Elimination ///////////////////////////////////////////////////////////////
   
   public static Set<Integer> valuesNotEliminated(Square square) {
     Set<Integer> values = Sets.newHashSet(1,2,3,4,5,6,7,8,9);
@@ -20,9 +22,24 @@ public abstract class StrategyHelper {
     return values;
   }
 
+  public static boolean valueIsEliminatedFromAll(Integer value, Set<Square> squares) {
+    for (Square square: squares){
+      if (valuesNotEliminated(square).contains(value)){
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // blockOut //////////////////////////////////////////////////////////////////
+
+  public static Set<Square> getOtherUnsetSquaresInThisZone(Group group, Square square) {
+    return group.getOtherSquaresInThisZone(square).stream().filter(s -> s.getValue() == null)
+        .collect(Collectors.toSet());
+  }
 
   public static void blockOutRows(Set<Integer> valuesToGet, Square square) {
-    Set<Row> adjacentRow = getAdjacentRow(square);
+    Set<Row> adjacentRow = getAdjacentRows(square);
     for (Integer value : valuesToGet) {
       if (allRowContains(adjacentRow, value)) {
         square.setValue(value);
@@ -31,7 +48,7 @@ public abstract class StrategyHelper {
   }
 
   public static void blockOutColumns(Set<Integer> valuesToGet, Square square) {
-    Set<Column> adjacentColumn = getAdjacentColumn(square);
+    Set<Column> adjacentColumn = getAdjacentColumns(square);
     for (Integer value : valuesToGet) {
       if (allColumnContains(adjacentColumn, value)) {
         square.setValue(value);
@@ -59,12 +76,19 @@ public abstract class StrategyHelper {
         .collect(Collectors.toSet()).size() == 0;
   }
 
-  public static Set<Row> getAdjacentRow(Square square) {
+  public static Set<Zone> getAdjacentRowsAndColumns(Square square) {
+    Set<Zone> adjacentRowsAndColumns = new HashSet<>();
+    adjacentRowsAndColumns.addAll(getAdjacentColumns(square));
+    adjacentRowsAndColumns.addAll(getAdjacentRows(square));
+    return adjacentRowsAndColumns;
+  }
+
+  public static Set<Row> getAdjacentRows(Square square) {
     return getAdjacentSquaresInColumn(square).stream().map(Square:: getRow)
         .collect(Collectors.toSet());
   }
 
-  public static Set<Column> getAdjacentColumn(Square square) {
+  public static Set<Column> getAdjacentColumns(Square square) {
     return getAdjacentSquaresInRow(square).stream().map(Square:: getColumn)
         .collect(Collectors.toSet());
   }
@@ -76,5 +100,14 @@ public abstract class StrategyHelper {
   public static Set<Square> getAdjacentSquaresInColumn(Square square) {
     return square.getColumn().getOtherSquaresInGroup(square.getGroup(), square);
   }
-  
+
+  public static boolean isPuzzleSolved(List<Square> squares) {
+    return squares.parallelStream().filter(square -> square.getValue() == null)
+        .collect(Collectors.toSet()).size() == 0;
+  }
+
+  public static boolean valueCanGoInSquare(Integer value, Square square){
+    return valuesNotEliminated(square).contains(value);
+  }
+
 }

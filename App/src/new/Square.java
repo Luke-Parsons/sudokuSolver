@@ -10,7 +10,7 @@ public class Square {
   private Integer value = null;
 
   private Position position;
-  private Set<Strategy> strategys;
+  private Set<SquareStrategy> squareStrategies;
 
   private Row row;
   private Column column;
@@ -18,11 +18,11 @@ public class Square {
 
   private boolean hasBeenSet = false;
 
-  public Square(Integer value, Position position, Set<Strategy> strategys, Row row, Column column,
+  public Square(Integer value, Position position, Set<SquareStrategy> squareStrategies, Row row, Column column,
       Group group) {
     this.value = value;
     this.position = position;
-    this.strategys = strategys;
+    this.squareStrategies = squareStrategies;
     this.row = row;
     this.column = column;
     this.group = group;
@@ -42,7 +42,7 @@ public class Square {
   }
 
   public void update() {
-   strategys.forEach(strategy -> strategy.solve(this));
+   squareStrategies.forEach(strategy -> strategy.solve(this));
   }
 
   public Set<Integer> getRowPotentialValues() {
@@ -57,8 +57,8 @@ public class Square {
     return group.getMissingValues();
   }
 
-  public Set<Strategy> getStrategys() {
-    return strategys;
+  public Set<SquareStrategy> getSquareStrategies() {
+    return squareStrategies;
   }
 
   public Row getRow() {
@@ -78,4 +78,9 @@ public class Square {
     return (value == null) ? "-"
         : ((hasBeenSet) ? "\033[31m" + value.toString() + "\033[0m" : value.toString());
   }
+
+//  @Override
+//  public String toString() {
+//    return StrategyHelper.valuesNotEliminated(this).size() + "";
+//  }
 }

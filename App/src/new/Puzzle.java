@@ -1,5 +1,6 @@
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by 
@@ -7,14 +8,28 @@ import java.util.List;
  */
 public class Puzzle {
 
-  List<Square> squares;
+  private List<Square> squares;
+  private Set<PuzzleStrategy> puzzleStrategies;
 
   public Puzzle(List<Square> squares) {
     this.squares = squares;
   }
 
-  public void solve() {
+  public Puzzle(List<Square> squares, Set<PuzzleStrategy> puzzleStrategies) {
+    this.squares = squares;
+    this.puzzleStrategies = puzzleStrategies;
+  }
+
+  public void solveBySquare() {
     squares.forEach(Square:: update);
+  }
+
+  public void solveByPuzzle() {
+    puzzleStrategies.forEach(puzzleStrategy -> puzzleStrategy.solve(this));
+  }
+
+  public List<Square> getSquares() {
+    return squares;
   }
 
   @Override

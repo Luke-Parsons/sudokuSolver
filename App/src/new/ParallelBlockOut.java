@@ -6,7 +6,8 @@ import java.util.Set;
  * Created by 
  * @author luke on 21/05/2017.
  */
-public class ParallelBlockOut implements Strategy {
+@Deprecated
+public class ParallelBlockOut implements SquareStrategy {
 
   @Override
   public void solve(Square square) {

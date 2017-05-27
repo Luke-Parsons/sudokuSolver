@@ -4,7 +4,8 @@
  * Created by 
  * @author luke on 24/05/2017.
  */
-public class LastOneLeft implements Strategy {
+@Deprecated
+public class LastOneLeft implements SquareStrategy {
 
   @Override
   public void solve(Square square) {

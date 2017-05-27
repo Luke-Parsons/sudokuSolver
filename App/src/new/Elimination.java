@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by 
  * @author luke on 25/05/2017.
  */
-public class Elimination implements Strategy {
+public class Elimination implements SquareStrategy {
 
   @Override
   public void solve(Square square) {
