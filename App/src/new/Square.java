@@ -1,4 +1,3 @@
-
 import java.util.Set;
 
 /**
@@ -18,8 +17,8 @@ public class Square {
 
   private boolean hasBeenSet = false;
 
-  public Square(Integer value, Position position, Set<SquareStrategy> squareStrategies, Row row, Column column,
-      Group group) {
+  public Square(Integer value, Position position, Set<SquareStrategy> squareStrategies, Row row,
+      Column column, Group group) {
     this.value = value;
     this.position = position;
     this.squareStrategies = squareStrategies;
@@ -42,7 +41,7 @@ public class Square {
   }
 
   public void update() {
-   squareStrategies.forEach(strategy -> strategy.solve(this));
+    squareStrategies.forEach(strategy -> strategy.solve(this));
   }
 
   public Set<Integer> getRowPotentialValues() {
@@ -73,14 +72,18 @@ public class Square {
     return (Group) group;
   }
 
+  public int theNumOfValuesNotEliminated() {
+    return StrategyHelper.valuesNotEliminated(this).size();
+  }
+
   @Override
   public String toString() {
     return (value == null) ? "-"
         : ((hasBeenSet) ? "\033[31m" + value.toString() + "\033[0m" : value.toString());
   }
 
-//  @Override
-//  public String toString() {
-//    return StrategyHelper.valuesNotEliminated(this).size() + "";
-//  }
+  //  @Override
+  //  public String toString() {
+  //    return theNumOfValuesNotEliminated() + "";
+  //  }
 }

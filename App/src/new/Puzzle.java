@@ -32,6 +32,16 @@ public class Puzzle {
     return squares;
   }
 
+  public void orderPuzzle(){
+    squares.sort((o1, o2) -> {
+      if (o1.getPosition().getPositionInPuzzle() < o2.getPosition().getPositionInPuzzle()) {
+        return -1;
+      } else {
+        return 1;
+      }
+    });
+  }
+
   @Override
   public String toString() {
     StringBuilder out = new StringBuilder();

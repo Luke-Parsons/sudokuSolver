@@ -142,15 +142,10 @@ public class PuzzleBuilder {
     squares.add(getSquare(strings.get(79), 80, 8, 9, 8, r9, c8, g9, squareStrategies));
     squares.add(getSquare(strings.get(80), 81, 9, 9, 9, r9, c9, g9, squareStrategies));
 
-    squares.sort((o1, o2) -> {
-      if (o1.getPosition().getPositionInPuzzle() < o2.getPosition().getPositionInPuzzle()) {
-        return -1;
-      } else {
-        return 1;
-      }
-    });
+    Puzzle puzzle = new Puzzle(squares, puzzleStrategies);
+    puzzle.orderPuzzle();
 
-    return new Puzzle(squares, puzzleStrategies);
+    return puzzle;
   }
 
   private static Integer getValue(String value) {

@@ -4,9 +4,12 @@ import java.util.List;
 
 /**
  * Created by 
- * @author luke on 26/05/2017.
+ * @author luke on 27/05/2017.
+ *
+ * the same as BruteForce but the Set squares are sorted by valuesNotEliminated()
+ * in this way the puzzle is traversed by most likely Square next, not just by square number
  */
-public class BruteForce implements PuzzleStrategy {
+public class BruteForceLessGuess implements PuzzleStrategy {
 
   private static int NUMBER_OF_GUESS = 0;
   private static long TIME_TAKEN_SECS = 0;
@@ -25,6 +28,16 @@ public class BruteForce implements PuzzleStrategy {
   }
 
   private Puzzle solveRecursively(List<Square> squares) {
+
+    squares.sort((s1, s2) -> {
+      if (s1.theNumOfValuesNotEliminated() < s2.theNumOfValuesNotEliminated()) {
+        return -1;
+      } else if (s1.theNumOfValuesNotEliminated() > s2.theNumOfValuesNotEliminated()) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
 
     if (StrategyHelper.isPuzzleSolved(squares)) {
       return new Puzzle(squares);
@@ -53,7 +66,6 @@ public class BruteForce implements PuzzleStrategy {
     return null;
   }
 
-
   private static void print(Puzzle puzzle) {
 
     puzzle.orderPuzzle();
@@ -64,5 +76,3 @@ public class BruteForce implements PuzzleStrategy {
   }
 
 }
-
-
