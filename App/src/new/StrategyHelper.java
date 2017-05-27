@@ -110,4 +110,8 @@ public abstract class StrategyHelper {
     return valuesNotEliminated(square).contains(value);
   }
 
+  public static int numberOfSquaresToFill(Puzzle puzzle) {
+    return puzzle.getSquares().parallelStream().filter(square -> square.getValue() == null)
+        .collect(Collectors.toSet()).size();
+  }
 }

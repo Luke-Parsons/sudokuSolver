@@ -21,8 +21,13 @@ public class App {
 
   public static void main(String[] args) throws InterruptedException {
 
-    Puzzle puzzle = PuzzleBuilder.Build(puzzleString3,null, Sets.newHashSet(new BruteForce()));
+    IterativeSquareStrategy iterativeSquareStrategy =
+        new IterativeSquareStrategy(Sets.newHashSet(new Elimination(), new BlockOut()));
+
+    Puzzle puzzle = PuzzleBuilder.Build(puzzleString3,null, Sets.newHashSet
+        (iterativeSquareStrategy));
     puzzle.solveByPuzzle();
+
 //
 //    System.out.println("Interaction : 0");
 //    System.out.println(puzzle.toString());
