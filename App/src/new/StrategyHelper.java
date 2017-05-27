@@ -12,9 +12,9 @@ import java.util.stream.Collectors;
 public abstract class StrategyHelper {
 
   // Elimination ///////////////////////////////////////////////////////////////
-  
+
   public static Set<Integer> valuesNotEliminated(Square square) {
-    Set<Integer> values = Sets.newHashSet(1,2,3,4,5,6,7,8,9);
+    Set<Integer> values = Sets.newHashSet(1, 2, 3, 4, 5, 6, 7, 8, 9);
 
     values.removeAll(square.getRow().getValues());
     values.removeAll(square.getColumn().getValues());
@@ -23,8 +23,8 @@ public abstract class StrategyHelper {
   }
 
   public static boolean valueIsEliminatedFromAll(Integer value, Set<Square> squares) {
-    for (Square square: squares){
-      if (valuesNotEliminated(square).contains(value)){
+    for (Square square : squares) {
+      if (valuesNotEliminated(square).contains(value)) {
         return false;
       }
     }
@@ -38,32 +38,15 @@ public abstract class StrategyHelper {
         .collect(Collectors.toSet());
   }
 
-  public static void blockOutRows(Set<Integer> valuesToGet, Square square) {
-    Set<Row> adjacentRow = getAdjacentRows(square);
-    for (Integer value : valuesToGet) {
-      if (allRowContains(adjacentRow, value)) {
-        square.setValue(value);
-      }
-    }
-  }
-
-  public static void blockOutColumns(Set<Integer> valuesToGet, Square square) {
-    Set<Column> adjacentColumn = getAdjacentColumns(square);
-    for (Integer value : valuesToGet) {
-      if (allColumnContains(adjacentColumn, value)) {
-        square.setValue(value);
-      }
-    }
-  }
-
   public static boolean allRowContains(Set<Row> rows, Integer value) {
-    return rows.stream().filter(row -> row.containsValue(value))
-        .collect(Collectors.toSet()).size() == rows.size();
+    return rows.stream().filter(row -> row.containsValue(value)).collect(Collectors.toSet()).size()
+        == rows.size();
   }
 
   public static boolean allColumnContains(Set<Column> columns, Integer value) {
-    return columns.stream().filter(column -> column.containsValue(value))
-        .collect(Collectors.toSet()).size() == columns.size();
+    return
+        columns.stream().filter(column -> column.containsValue(value)).collect(Collectors.toSet())
+            .size() == columns.size();
   }
 
   public static boolean adjacentSquareInRowAreFilled(Square square) {
@@ -101,12 +84,16 @@ public abstract class StrategyHelper {
     return square.getColumn().getOtherSquaresInGroup(square.getGroup(), square);
   }
 
+  public static boolean isPuzzleSolved(Puzzle puzzle) {
+    return isPuzzleSolved(puzzle.getSquares());
+  }
+
   public static boolean isPuzzleSolved(List<Square> squares) {
     return squares.parallelStream().filter(square -> square.getValue() == null)
         .collect(Collectors.toSet()).size() == 0;
   }
 
-  public static boolean valueCanGoInSquare(Integer value, Square square){
+  public static boolean canValueGoInSquare(Integer value, Square square) {
     return valuesNotEliminated(square).contains(value);
   }
 

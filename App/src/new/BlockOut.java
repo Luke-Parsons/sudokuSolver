@@ -6,6 +6,8 @@ import java.util.Set;
  */
 public class BlockOut implements SquareStrategy {
 
+  private static Colour colour = Colour.YELLOW;
+
   @Override
   public void solve(Square square) {
 
@@ -19,8 +21,9 @@ public class BlockOut implements SquareStrategy {
         StrategyHelper.getOtherUnsetSquaresInThisZone(square.getGroup(), square);
 
     for (Integer value : missingValues) {
+      // todo not working
       if (StrategyHelper.valueIsEliminatedFromAll(value, otherBlankSquaresInThisZone)) {
-        square.setValue(value);
+        square.setValue(value , colour);
       }
     }
 

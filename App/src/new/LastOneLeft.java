@@ -7,6 +7,8 @@
 @Deprecated
 public class LastOneLeft implements SquareStrategy {
 
+  private static Colour colour = Colour.TURQUOISE;
+
   @Override
   public void solve(Square square) {
 
@@ -15,13 +17,13 @@ public class LastOneLeft implements SquareStrategy {
     }
 
     if (square.getRow().hasOneSquareLeft()) {
-      square.setValue(square.getRow().getMissingValue());
+      square.setValue(square.getRow().getMissingValue(), colour);
 
     } else if (square.getColumn().hasOneSquareLeft()) {
-      square.setValue(square.getColumn().getMissingValue());
+      square.setValue(square.getColumn().getMissingValue(), colour);
 
     } else if (square.getGroup().hasOneSquareLeft()) {
-      square.setValue(square.getGroup().getMissingValue());
+      square.setValue(square.getGroup().getMissingValue(), Colour.TURQUOISE);
     }
 
   }

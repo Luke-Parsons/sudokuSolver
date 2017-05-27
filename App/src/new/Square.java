@@ -15,7 +15,7 @@ public class Square {
   private Column column;
   private Group group;
 
-  private boolean hasBeenSet = false;
+  private Colour colour = Colour.BLANK;
 
   public Square(Integer value, Position position, Set<SquareStrategy> squareStrategies, Row row,
       Column column, Group group) {
@@ -27,9 +27,21 @@ public class Square {
     this.group = group;
   }
 
-  public void setValue(Integer value) {
+  public void resetValue(Colour colour){
+    this.value = null;
+    this.colour = colour;
+  }
+
+  public void setValue(Integer value,Colour colour) {
+
+    if (!StrategyHelper.canValueGoInSquare(value,this)){
+      this.colour = Colour.HIGHLIGHTED;
+      throw new IllegalArgumentException("strategy has made a mistake");
+    }
+
     this.value = value;
-    this.hasBeenSet = true;
+    this.colour = colour;
+
   }
 
   public Position getPosition() {
@@ -78,8 +90,8 @@ public class Square {
 
   @Override
   public String toString() {
-    return (value == null) ? "-"
-        : ((hasBeenSet) ? "\033[31m" + value.toString() + "\033[0m" : value.toString());
+    return colour.getColourString() + ((value == null) ? "-" : value.toString()) + Colour.BLANK
+        .getColourString();
   }
 
   //  @Override

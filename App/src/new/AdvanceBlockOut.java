@@ -12,8 +12,7 @@ public class AdvanceBlockOut implements SquareStrategy {
     // X,8,X | X, ,X | X,X,X
     //  , ,X | X,?,X | X,X,X
 
-
-    // so you you know that "?" has to be "8"
+    // so you know that "?" has to be "8"
     // Elimination and BlockOut would think that "8" could possibly go in "+" or "+"
 
   }

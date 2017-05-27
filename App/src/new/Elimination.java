@@ -8,6 +8,8 @@ import java.util.ArrayList;
  */
 public class Elimination implements SquareStrategy {
 
+  private static Colour colour = Colour.BLUE;
+
   @Override
   public void solve(Square square) {
     if (square.getValue() != null) {
@@ -15,7 +17,7 @@ public class Elimination implements SquareStrategy {
     }
 
     if (StrategyHelper.valuesNotEliminated(square).size() == 1) {
-      square.setValue(new ArrayList<>(StrategyHelper.valuesNotEliminated(square)).get(0));
+      square.setValue(new ArrayList<>(StrategyHelper.valuesNotEliminated(square)).get(0), colour);
     }
   }
 
