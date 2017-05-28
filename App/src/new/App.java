@@ -15,7 +15,9 @@ public class App {
   private static String puzzleString3 =
       "6,4,?,?,2,?,3,?,?,3,5,?,?,8,1,?,2,?,?,1,2,?,3,6,?,?,?,?,3,?,6,?,?,?,?,2,1,?,?,?,7,?,?,?,8,"
           + "5,?,?,?,?,2,?,6,?,?,?,?,7,5,?,8,3,?,?,8,?,1,6,?,?,4,7,?,?,3,?,9,?,?,5,1";
-
+  private static String puzzleAdvanceBlockOut = "?,7,?,3,?,2,?,?,?,8,?,?,?,?,?,1,?,4,6,?,?,?,1,?,?,?,?,?,"
+      + "?,8,?,3,?,?,1,?,?,1,?,9,?,6,?,5,?,?,4,?,?,7,?,3,?,?,?,?,?,?,2,?,?,?,3,9,?,2,?,?,3,?,?,7,"
+      + "?,?,?,6,?,7,2,8,1";
   public static void main(String[] args) throws InterruptedException {
 
     //    SquareStrategyWrapper iterativeSquareStrategy =
@@ -30,7 +32,7 @@ public class App {
         OptimisedBruteForce bruteForce = new OptimisedBruteForce();
     //    ClassicBruteForce bruteForce = new ClassicBruteForce();
 
-    Puzzle puzzle = PuzzleBuilder.build(puzzleString1);
+    Puzzle puzzle = PuzzleBuilder.build(puzzleAdvanceBlockOut);
 
     try {
       puzzle.solveWithPuzzleStrategies(Sets.newHashSet(squareStrategyWrapper));
