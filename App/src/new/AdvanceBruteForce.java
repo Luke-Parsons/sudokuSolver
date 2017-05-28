@@ -6,7 +6,7 @@ import java.util.Set;
  * Created by 
  * @author luke on 26/05/2017.
  */
-public class BruteForce implements PuzzleStrategy {
+public class AdvanceBruteForce implements PuzzleStrategy {
 
   private static Colour colour = Colour.RED;
 
@@ -16,9 +16,9 @@ public class BruteForce implements PuzzleStrategy {
   private Set<SquareStrategy> squareSpeedFactors;
   private Set<PuzzleStrategy> puzzleSpeedFactors;
 
-  public BruteForce() {}
+  public AdvanceBruteForce() {}
 
-  public BruteForce(Set<SquareStrategy> squareSpeedFactors,
+  public AdvanceBruteForce(Set<SquareStrategy> squareSpeedFactors,
       Set<PuzzleStrategy> puzzleSpeedFactors) {
     this.squareSpeedFactors = squareSpeedFactors;
     this.puzzleSpeedFactors = puzzleSpeedFactors;
@@ -44,6 +44,10 @@ public class BruteForce implements PuzzleStrategy {
     }
 
     Puzzle oldGoodPuzzle = PuzzleBuilder.clone(puzzle);
+
+    if (!StrategyHelper.isThisSolvable(puzzle)) {
+      return puzzle;
+    }
 
     applySquareSpeedFactors(puzzle);
     applyPuzzleSpeedFactors(puzzle);

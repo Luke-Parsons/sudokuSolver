@@ -2,7 +2,7 @@
  * Created by 
  * @author luke on 27/05/2017.
  *
- * the same as BruteForce but the Set squares are sorted by valuesNotEliminated()
+ * the same as AdvanceBruteForce but the Set squares are sorted by valuesNotEliminated()
  * in this way the puzzle is traversed by most likely Square next, not just by square number
  *
  */

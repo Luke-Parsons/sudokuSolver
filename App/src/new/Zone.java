@@ -1,4 +1,6 @@
 
+import com.google.common.collect.Sets;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -76,6 +78,15 @@ public abstract class Zone {
       }
     }
     return squares;
+  }
+
+  public Set<Square> getSquares(){
+    return Sets.newHashSet(map.values());
+  }
+
+  public Set<Square> getEmptySquares() {
+    return map.values().stream().filter(square -> square.getValue() == null)
+        .collect(Collectors.toSet());
   }
 
 }

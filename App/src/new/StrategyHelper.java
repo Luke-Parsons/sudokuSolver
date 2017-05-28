@@ -84,6 +84,26 @@ public abstract class StrategyHelper {
     return square.getColumn().getOtherSquaresInGroup(square.getGroup(), square);
   }
 
+  public static Set<Group> getOtherGroupsHorizontally(Square square) {
+    Set<Group> groups = new HashSet<>();
+    for (Square rowSquare : square.getRow().getSquares()){
+      if (!rowSquare.getGroup().equals(square.getGroup())){
+        groups.add(rowSquare.getGroup());
+      }
+    }
+    return groups;
+  }
+
+  public static Set<Group> getOtherGroupsVertically(Square square) {
+    Set<Group> groups = new HashSet<>();
+    for (Square columnSquare : square.getColumn().getSquares()){
+      if (!columnSquare.getGroup().equals(square.getGroup())){
+        groups.add(columnSquare.getGroup());
+      }
+    }
+    return groups;
+  }
+
   public static boolean isPuzzleSolved(Puzzle puzzle) {
     return isPuzzleSolved(puzzle.getSquares());
   }
@@ -101,4 +121,34 @@ public abstract class StrategyHelper {
     return puzzle.getSquares().parallelStream().filter(square -> square.getValue() == null)
         .collect(Collectors.toSet()).size();
   }
+
+  public static boolean allPotentialPositionsOfValueInGroupInTheSameRow(Integer value, Group group){
+    Set<Square> emptySquares = group.getEmptySquares();
+    Set<Square> squaresWhereValueCanGo =
+        emptySquares.stream().filter(square -> valuesNotEliminated(square).contains(value))
+            .collect(Collectors.toSet());
+    return squaresWhereValueCanGo.stream().map(Square:: getRow).collect(Collectors.toSet())
+        .size() <= 1;
+  }
+
+  public static boolean allPotentialPositionsOfValueInGroupInTheSameColumn(Integer value,
+      Group group) {
+    Set<Square> emptySquares = group.getEmptySquares();
+    Set<Square> squaresWhereValueCanGo =
+        emptySquares.stream().filter(square -> valuesNotEliminated(square).contains(value))
+            .collect(Collectors.toSet());
+    return
+        squaresWhereValueCanGo.stream().map(Square:: getColumn).collect(Collectors.toSet()).size()
+            <= 1;
+  }
+
+  public static boolean isThisSolvable(Puzzle puzzle) {
+    for (Square square : puzzle.getSquares()) {
+      if (square.getValue() == null && valuesNotEliminated(square).size() == 0) {
+        return false;
+      }
+    }
+    return true;
+  }
+
 }
