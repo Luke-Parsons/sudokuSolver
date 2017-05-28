@@ -27,7 +27,7 @@ public class App {
     //    AdvanceBruteForce bruteForce =
     //        new AdvanceBruteForce(null, Sets.newHashSet(squareStrategyWrapper));
 
-    //    OptimisedBruteForce bruteForce = new OptimisedBruteForce();
+        OptimisedBruteForce bruteForce = new OptimisedBruteForce();
     //    ClassicBruteForce bruteForce = new ClassicBruteForce();
 
     Puzzle puzzle = PuzzleBuilder.build(puzzleString1);

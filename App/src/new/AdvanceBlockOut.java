@@ -1,6 +1,3 @@
-import java.util.Set;
-import java.util.stream.Collectors;
-
 /**
  * Created by 
  * @author luke on 25/05/2017.
@@ -27,44 +24,32 @@ public class AdvanceBlockOut implements SquareStrategy {
     // | X,?,X | X, ,X |  ,?,  |
     // |  , ,X | X,a,  | X,X,X |
 
+       // ------|------|------
+       // - 7 - |3 - 2 |- - -
+       // 8 - - |- - - |1 - 4
+       // 6 - - |- 1 - |- - -
+       // ------|------|------
+       // - - 8 |- 3 - |- 1 -
+       // - 1 - |9 - 6 |- 5 -
+       // - 4 - |- 7 - |3 - -
+       // ------|------|------
+       // - - - |- 2 - |- - 3
+       // 9 - 2 |B - 3 |- - 7
+       // - - - |- A 7 |2 8 1
+       // ------|------|------
+
+       // A = 9
+       // B = 1
   }
 
   private void advanceBlockOut(Square square){
 
+
   }
 
   private void advanceBlockOutByRow(Square square){
-    Set<Row> adjacentRows = StrategyHelper.getAdjacentRows(square);
 
-    Set<Group> otherGroups = StrategyHelper.getOtherGroupsHorizontally(square);
 
-    valuesLoop:
-    for (Integer value: StrategyHelper.valuesNotEliminated(square)) {
-
-      if (!(StrategyHelper.getAdjacentSquaresInRow(square).stream().filter(square1 -> square
-          .getValue() == null).collect(Collectors.toSet()).size() == 0)){
-        continue;
-      }
-
-      for (Group group : otherGroups) {
-        // are all potential positions of value in group in the same row
-        // todo  as zeg zag
-        //               8
-        // | ?,X,X |  , ,X | ?,X,X |
-        // | X,?,X | X, ,X |  ,?,  |
-        // |  , ,X | X,a,  | X,X,X |
-
-        if (!StrategyHelper.allPotentialPositionsOfValueInGroupInTheSameRow(value, group)) {
-          continue valuesLoop;
-        }
-      }
-
-      // if it has got this far we can set value
-      if (StrategyHelper.valuesNotEliminated(square).contains(value)){
-        square.setValue(value,colour);
-      }
-
-    }
 
   }
 
