@@ -1,15 +1,16 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 
 /**
  * Created by 
  * @author luke on 25/05/2017.
  */
-public class AdvanceBlockOut implements SquareStrategy {
+public class AdvanceBlockOut implements PuzzleStrategy {
 
   private static Colour colour = Colour.TURQUOISE;
 
   @Override
-  public void solve(Square square) {
+  public void solve(Puzzle puzzle) {
     //todo
 
     // | X,X,X | +,+,X |  ,X,  |
@@ -42,14 +43,18 @@ public class AdvanceBlockOut implements SquareStrategy {
 
     // A = 9
     // B = 1
+
+
+
+
   }
 
   private void advanceBlockOut(Group group) {
 
     ArrayList<Group> horizontallyGroups =
-        new ArrayList<>(StrategyHelper.getOtherGroupsHorizontally(square));
+        new ArrayList<>(StrategyHelper.getOtherGroupsHorizontally(group));
     ArrayList<Group> verticallyGroups =
-        new ArrayList<>(StrategyHelper.getOtherGroupsVertically(square));
+        new ArrayList<>(StrategyHelper.getOtherGroupsVertically(group));
 
     Group h1 = horizontallyGroups.get(0);
     Group h2 = horizontallyGroups.get(1);
@@ -57,13 +62,12 @@ public class AdvanceBlockOut implements SquareStrategy {
     Group v1 = verticallyGroups.get(0);
     Group v2 = verticallyGroups.get(1);
 
-    // set rowsBlockOut
-    // set columnsBlockOut
-
     for (Integer value : group.getMissingValues()) {
 
       // set rowsBlockOut
+      HashSet<Row> rowsBlockedOut = new HashSet<>();
       // set columnsBlockOut
+      HashSet<Column> columnBlockedOut = new HashSet<>();
 
       //////////////////////////////////////
 
@@ -100,14 +104,6 @@ public class AdvanceBlockOut implements SquareStrategy {
       // if value canGo square
       // canGo.get(0).setValue(value , colour)
     }
-
-  }
-
-  private void advanceBlockOutByRow(Square square) {
-
-  }
-
-  private void advanceBlockOutByColumn(Square square) {
 
   }
 

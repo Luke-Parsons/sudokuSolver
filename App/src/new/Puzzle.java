@@ -1,8 +1,6 @@
-
 import com.google.common.collect.Sets;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by 
@@ -17,24 +15,28 @@ public class Puzzle implements Cloneable {
 
   }
 
-  public void solveWithSquareStrategies(SquareStrategy squareStrategy) {
+  public void solve(SquareStrategy squareStrategy) {
     SquareStrategyWrapper squareStrategyWrapper =
         new SquareStrategyWrapper(Sets.newHashSet(squareStrategy));
     squareStrategyWrapper.solve(this);
   }
 
-  public void solveWithSquareStrategies(Set<SquareStrategy> squareStrategies) {
+  public void solve(SquareStrategy... squareStrategies) {
     SquareStrategyWrapper squareStrategyWrapper =
-        new SquareStrategyWrapper(squareStrategies);
+        new SquareStrategyWrapper(Sets.newHashSet((squareStrategies)));
     squareStrategyWrapper.solve(this);
   }
 
-  public void solveWithPuzzleStrategies(PuzzleStrategy puzzleStrategy) {
-    puzzleStrategy.solve(this);
+  public void solve(PuzzleStrategy puzzleStrategy) {
+    PuzzleStrategyWrapper puzzleStrategyWrapper =
+        new PuzzleStrategyWrapper(Sets.newHashSet(puzzleStrategy));
+    puzzleStrategyWrapper.solve(this);
   }
 
-  public void solveWithPuzzleStrategies(Set<PuzzleStrategy> puzzleStrategies) {
-    puzzleStrategies.forEach(puzzleStrategy -> puzzleStrategy.solve(this));
+  public void solve(PuzzleStrategy... puzzleStrategies) {
+    PuzzleStrategyWrapper puzzleStrategyWrapper =
+        new PuzzleStrategyWrapper(Sets.newHashSet(puzzleStrategies));
+    puzzleStrategyWrapper.solve(this);
   }
 
   public List<Square> getSquares() {
@@ -45,7 +47,7 @@ public class Puzzle implements Cloneable {
     this.squares = squares;
   }
 
-  public void orderPuzzle(){
+  public void orderPuzzle() {
     squares.sort((o1, o2) -> {
       if (o1.getPosition().getPositionInPuzzle() < o2.getPosition().getPositionInPuzzle()) {
         return -1;
@@ -60,23 +62,22 @@ public class Puzzle implements Cloneable {
     StringBuilder out = new StringBuilder();
     out.append("------|------|------\n");
     for (Square square : squares) {
-      if (square.getPosition().getPositionInRow() == 1
-          && (square.getPosition().getPositionInColumn() == 4 ||square.getPosition()
-          .getPositionInColumn() == 7)) {
+      if (square.getPosition().getPositionInRow() == 1 && (
+          square.getPosition().getPositionInColumn() == 4
+              || square.getPosition().getPositionInColumn() == 7)) {
         out.append("------|------|------\n");
       }
-      out.append(""+ square.toString()+" ");
+      out.append("" + square.toString() + " ");
       if (square.getPosition().getPositionInRow() == 9) {
         out.append("\n");
       }
       if (square.getPosition().getPositionInRow() == 3
-          ||square.getPosition().getPositionInRow() == 6){
+          || square.getPosition().getPositionInRow() == 6) {
         out.append("|");
       }
     }
     out.append("------|------|------\n");
     return out.toString() + "\n\n\n\n";
   }
-
 
 }

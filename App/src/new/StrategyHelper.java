@@ -1,5 +1,6 @@
 import com.google.common.collect.Sets;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -84,20 +85,30 @@ public abstract class StrategyHelper {
     return square.getColumn().getOtherSquaresInGroup(square.getGroup(), square);
   }
 
+  public static Set<Group> getOtherGroupsHorizontally(Group group) {
+    ArrayList<Square> square = new ArrayList<>(group.getSquares());
+    return getOtherGroupsHorizontally(square.get(0));
+  }
+
   public static Set<Group> getOtherGroupsHorizontally(Square square) {
     Set<Group> groups = new HashSet<>();
-    for (Square rowSquare : square.getRow().getSquares()){
-      if (!rowSquare.getGroup().equals(square.getGroup())){
+    for (Square rowSquare : square.getRow().getSquares()) {
+      if (!rowSquare.getGroup().equals(square.getGroup())) {
         groups.add(rowSquare.getGroup());
       }
     }
     return groups;
   }
 
+  public static Set<Group> getOtherGroupsVertically(Group group) {
+    ArrayList<Square> square = new ArrayList<>(group.getSquares());
+    return getOtherGroupsVertically(square.get(0));
+  }
+
   public static Set<Group> getOtherGroupsVertically(Square square) {
     Set<Group> groups = new HashSet<>();
-    for (Square columnSquare : square.getColumn().getSquares()){
-      if (!columnSquare.getGroup().equals(square.getGroup())){
+    for (Square columnSquare : square.getColumn().getSquares()) {
+      if (!columnSquare.getGroup().equals(square.getGroup())) {
         groups.add(columnSquare.getGroup());
       }
     }
@@ -122,13 +133,14 @@ public abstract class StrategyHelper {
         .collect(Collectors.toSet()).size();
   }
 
-  public static boolean allPotentialPositionsOfValueInGroupInTheSameRow(Integer value, Group group){
+  public static boolean allPotentialPositionsOfValueInGroupInTheSameRow(Integer value,
+      Group group) {
     Set<Square> emptySquares = group.getEmptySquares();
     Set<Square> squaresWhereValueCanGo =
         emptySquares.stream().filter(square -> valuesNotEliminated(square).contains(value))
             .collect(Collectors.toSet());
-    return squaresWhereValueCanGo.stream().map(Square:: getRow).collect(Collectors.toSet())
-        .size() <= 1;
+    return squaresWhereValueCanGo.stream().map(Square:: getRow).collect(Collectors.toSet()).size()
+        <= 1;
   }
 
   public static boolean allPotentialPositionsOfValueInGroupInTheSameColumn(Integer value,

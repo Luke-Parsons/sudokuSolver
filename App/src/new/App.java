@@ -15,27 +15,31 @@ public class App {
   private static String puzzleString3 =
       "6,4,?,?,2,?,3,?,?,3,5,?,?,8,1,?,2,?,?,1,2,?,3,6,?,?,?,?,3,?,6,?,?,?,?,2,1,?,?,?,7,?,?,?,8,"
           + "5,?,?,?,?,2,?,6,?,?,?,?,7,5,?,8,3,?,?,8,?,1,6,?,?,4,7,?,?,3,?,9,?,?,5,1";
-  private static String puzzleAdvanceBlockOut = "?,7,?,3,?,2,?,?,?,8,?,?,?,?,?,1,?,4,6,?,?,?,1,?,?,?,?,?,"
-      + "?,8,?,3,?,?,1,?,?,1,?,9,?,6,?,5,?,?,4,?,?,7,?,3,?,?,?,?,?,?,2,?,?,?,3,9,?,2,?,?,3,?,?,7,"
-      + "?,?,?,6,?,7,2,8,1";
+  private static String puzzleAdvanceBlockOutTest =
+      "?,7,?,3,?,2,?,?,?,8,?,?,?,?,?,1,?,4,6,?,?,?,1,?,?,?,?,?,"
+          + "?,8,?,3,?,?,1,?,?,1,?,9,?,6,?,5,?,?,4,?,?,7,?,3,?,?,?,?,?,?,2,?,?,?,3,9,?,2,?,?,3,?,"
+          + "?,7,"
+          + "?,?,?,6,?,7,2,8,1";
+
   public static void main(String[] args) throws InterruptedException {
 
     //    SquareStrategyWrapper iterativeSquareStrategy =
     //        new SquareStrategyWrapper(Sets.newHashSet(new Elimination(), new BlockOut()));
 
-    SquareStrategyWrapper squareStrategyWrapper =
-        new SquareStrategyWrapper(Sets.newHashSet(new BlockOut()));
     //    Sets.newHashSet(squareStrategyWrapper)
     //    AdvanceBruteForce bruteForce =
     //        new AdvanceBruteForce(null, Sets.newHashSet(squareStrategyWrapper));
 
-        OptimisedBruteForce bruteForce = new OptimisedBruteForce();
+    //        OptimisedBruteForce bruteForce = new OptimisedBruteForce();
     //    ClassicBruteForce bruteForce = new ClassicBruteForce();
 
-    Puzzle puzzle = PuzzleBuilder.build(puzzleAdvanceBlockOut);
+    Puzzle puzzle = PuzzleBuilder.build(puzzleAdvanceBlockOutTest);
+
+    AdvanceBruteForce bestStrategy =
+        new AdvanceBruteForce(Sets.newHashSet(new Elimination(), new BlockOut()), null);
 
     try {
-      puzzle.solveWithPuzzleStrategies(Sets.newHashSet(squareStrategyWrapper));
+      puzzle.solve(bestStrategy);
       System.out.print(puzzle);
     } catch (Exception e) {
       System.err.print("ERROR: \n");

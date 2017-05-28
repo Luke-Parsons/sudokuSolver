@@ -83,9 +83,8 @@ public class AdvanceBruteForce implements PuzzleStrategy {
 
   private void applySquareSpeedFactors(Puzzle puzzle) {
     if (squareSpeedFactors != null) {
-      for (Square square : puzzle.getSquares()) {
-        squareSpeedFactors.forEach(speedFactor -> speedFactor.solve(square));
-      }
+      SquareStrategyWrapper squareStrategyWrapper = new SquareStrategyWrapper(squareSpeedFactors);
+      squareStrategyWrapper.solve(puzzle);
     }
   }
 
