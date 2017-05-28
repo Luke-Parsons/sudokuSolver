@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by 
@@ -21,7 +23,7 @@ public class AdvanceBlockOut implements PuzzleStrategy {
     // Elimination and BlockOut would think that "8" could possibly go in "+" or "+"
 
     // are all potential positions of value in group in the same row
-    // todo  as zeg zag
+    // zigzag problem
     //               8
     // | ?,X,X |  , ,X | ?,X,X |
     // | X,?,X | X, ,X |  ,?,  |
@@ -44,17 +46,16 @@ public class AdvanceBlockOut implements PuzzleStrategy {
     // A = 9
     // B = 1
 
-
-
+    StrategyHelper.getAllGroup(puzzle).forEach(this :: advanceBlockOut);
 
   }
 
-  private void advanceBlockOut(Group group) {
+  private void advanceBlockOut(Group thisGroup) {
 
     ArrayList<Group> horizontallyGroups =
-        new ArrayList<>(StrategyHelper.getOtherGroupsHorizontally(group));
+        new ArrayList<>(StrategyHelper.getOtherGroupsHorizontally(thisGroup));
     ArrayList<Group> verticallyGroups =
-        new ArrayList<>(StrategyHelper.getOtherGroupsVertically(group));
+        new ArrayList<>(StrategyHelper.getOtherGroupsVertically(thisGroup));
 
     Group h1 = horizontallyGroups.get(0);
     Group h2 = horizontallyGroups.get(1);
@@ -62,7 +63,7 @@ public class AdvanceBlockOut implements PuzzleStrategy {
     Group v1 = verticallyGroups.get(0);
     Group v2 = verticallyGroups.get(1);
 
-    for (Integer value : group.getMissingValues()) {
+    for (Integer value : thisGroup.getMissingValues()) {
 
       // set rowsBlockOut
       HashSet<Row> rowsBlockedOut = new HashSet<>();
@@ -71,38 +72,86 @@ public class AdvanceBlockOut implements PuzzleStrategy {
 
       //////////////////////////////////////
 
-      // set1 = get the rows this value can go (or is) in group h1
+      // set1 = get the rows this value can go (or is) in thisGroup h1
       // if set.size() == 1 add to rowsBlockOut
+      Set<Row> set1 = StrategyHelper.getRowsThisValueCanGoInOrIsIn(value, h1);
+      if (set1.size() == 1) {
+        rowsBlockedOut.addAll(set1);
+      }
 
-      // set2 = get the rows this value can go (or is) in group h2
+      // set2 = get the rows this value can go (or is) in thisGroup h2
       // if set.size() == 1 add to rowsBlockOut
+      Set<Row> set2 = StrategyHelper.getRowsThisValueCanGoInOrIsIn(value, h2);
+      if (set2.size() == 1) {
+        rowsBlockedOut.addAll(set2);
+      }
 
       // zigzag problem
-      // if set1 and set2 contain the same rows
+      // if (set1 and set2 contain the same rows) and (set.size() == 2)
       // addAll to rowsBlockOut
+      if (set1.size() == 2 && set2.size() == 2) {
+        set1.removeAll(set2);
+        if (set1.size() == 0) {
+          rowsBlockedOut.addAll(set2);
+        }
+      }
 
       //////////////////////////////////////
 
-      // set3 = get the Column this value can go (or is) in group v1
+      // set3 = get the Column this value can go (or is) in thisGroup v1
       // if set.size() == 1 add to columnsBlockOut
+      Set<Column> set3 = StrategyHelper.getColumnsThisValueCanGoInOrIsIn(value, v1);
+      if (set3.size() == 1) {
+        columnBlockedOut.addAll(set3);
+      }
 
-      // set4 = get the Column this value can go (or is) in group v2
+      // set4 = get the Column this value can go (or is) in thisGroup v2
       // if set.size() == 1 add to columnsBlockOut
+      Set<Column> set4 = StrategyHelper.getColumnsThisValueCanGoInOrIsIn(value, v2);
+      if (set4.size() == 1) {
+        columnBlockedOut.addAll(set4);
+      }
 
       // zigzag problem
-      // if set3 and set4 contain the same rows
+      // if set3 and set4 contain the same column and (set.size() == 2)
       // addAll to columnsBlockOut
+      if (set3.size() == 2 && set4.size() == 2) {
+        set3.removeAll(set4);
+        if (set4.size() == 0) {
+          columnBlockedOut.addAll(set3);
+        }
+      }
 
       ////////////////////////////////////////////////////////////
 
-      // set canGo = group get squares ware this value can go in this group
+      // set canGo = thisGroup get squares ware this value can go in this thisGroup
+      Set<Square> potentialSquaresForValue =
+          StrategyHelper.getPotentialSquaresForThisValueInGroup(value, thisGroup);
 
       // canGo.remove any square which has a row which is in rowsBlockOut
+      potentialSquaresForValue = potentialSquaresForValue.stream()
+          .filter(square -> !rowsBlockedOut.contains(square.getRow())).collect(Collectors.toSet());
+
       // canGo.remove any square which has a column which is in columnsBlockOut
+      potentialSquaresForValue = potentialSquaresForValue.stream()
+          .filter(square -> !columnBlockedOut.contains(square.getColumn()))
+          .collect(Collectors.toSet());
+
+      //////////////////////////////////////////////////////////////////////////////
 
       // if canGo.size == 1
       // if value canGo square
-      // canGo.get(0).setValue(value , colour)
+      if (potentialSquaresForValue.size() == 1) {
+        Square square = new ArrayList<>(potentialSquaresForValue).get(0);
+        if (StrategyHelper.canValueGoInSquare(value, square)) {
+          // canGo.get(0).setValue(value , colour)
+          square.setValue(value, colour);
+        }
+      }
+
+      ///////////////////////////////////////////////////////////////////////////
+
+
     }
 
   }

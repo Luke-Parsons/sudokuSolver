@@ -42,6 +42,7 @@ public class OptimisedBruteForce implements PuzzleStrategy {
       if (square.getValue() != null) {
         continue;
       }
+      // TODO: 28/05/2017 : order in count of this number left to get in puzzle
       // got to next empty square
       for (Integer value : Sets.newHashSet(1, 2, 3, 4, 5, 6, 7, 8, 9)) {
         if (StrategyHelper.canValueGoInSquare(value, square)) {

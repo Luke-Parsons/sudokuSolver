@@ -18,8 +18,7 @@ public class App {
   private static String puzzleAdvanceBlockOutTest =
       "?,7,?,3,?,2,?,?,?,8,?,?,?,?,?,1,?,4,6,?,?,?,1,?,?,?,?,?,"
           + "?,8,?,3,?,?,1,?,?,1,?,9,?,6,?,5,?,?,4,?,?,7,?,3,?,?,?,?,?,?,2,?,?,?,3,9,?,2,?,?,3,?,"
-          + "?,7,"
-          + "?,?,?,6,?,7,2,8,1";
+          + "?,7,?,?,?,6,?,7,2,8,1";
 
   public static void main(String[] args) throws InterruptedException {
 
@@ -36,14 +35,15 @@ public class App {
     Puzzle puzzle = PuzzleBuilder.build(puzzleAdvanceBlockOutTest);
 
     AdvanceBruteForce bestStrategy =
-        new AdvanceBruteForce(Sets.newHashSet(new Elimination(), new BlockOut()), null);
-
+        new AdvanceBruteForce(Sets.newHashSet( new Elimination() , new BlockOut()), null);
+    System.out.print(puzzle);
     try {
-      puzzle.solve(bestStrategy);
+      puzzle.solve(new AdvanceBlockOut());
       System.out.print(puzzle);
     } catch (Exception e) {
       System.err.print("ERROR: \n");
       System.out.print(puzzle.toString());
+      e.printStackTrace();
     }
 
   }

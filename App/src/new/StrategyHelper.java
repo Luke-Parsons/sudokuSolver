@@ -34,6 +34,12 @@ public abstract class StrategyHelper {
 
   // blockOut //////////////////////////////////////////////////////////////////
 
+  public static Set<Group> getAllGroup(Puzzle puzzle) {
+    Set<Group> groups = new HashSet<>();
+    puzzle.getSquares().forEach(square -> groups.add(square.getGroup()));
+    return groups;
+  }
+
   public static Set<Square> getOtherUnsetSquaresInThisZone(Group group, Square square) {
     return group.getOtherSquaresInThisZone(square).stream().filter(s -> s.getValue() == null)
         .collect(Collectors.toSet());
@@ -163,4 +169,45 @@ public abstract class StrategyHelper {
     return true;
   }
 
+  ////////////////////////////////////////////////////////////////////////////////////
+
+  public static Set<Row> getRowsThisValueCanGoInOrIsIn(Integer value, Group group) {
+    Set<Row> rows =
+        getPotentialSquaresForThisValueInGroup(value, group).stream().map(Square:: getRow)
+            .collect(Collectors.toSet());
+    Square square = getSquareWithValueInGroup(value, group);
+    if (square != null) {
+      rows.add(square.getRow());
+    }
+    return rows;
+  }
+
+  public static Set<Column> getColumnsThisValueCanGoInOrIsIn(Integer value, Group group) {
+    Set<Column> columns =
+        getPotentialSquaresForThisValueInGroup(value, group).stream().map(Square:: getColumn)
+            .collect(Collectors.toSet());
+    Square square = getSquareWithValueInGroup(value, group);
+    if (square != null) {
+      columns.add(square.getColumn());
+    }
+    return columns;
+  }
+
+  public static Set<Square> getPotentialSquaresForThisValueInGroup(Integer value, Group group) {
+    // TODO: 28/05/2017  no working :(
+    return group.getSquares().parallelStream().filter(square -> valuesNotEliminated(square).contains(value))
+        .collect(Collectors.toSet());
+  }
+
+  public static Square getSquareWithValueInGroup(Integer value, Group group) {
+    List<Square> squares =
+        group.getSquares().parallelStream().filter(square -> value.equals(square.getValue()))
+            .collect(Collectors.toList());
+
+    if (squares != null && !squares.isEmpty()) {
+      return squares.get(0);
+    } else {
+      return null;
+    }
+  }
 }
