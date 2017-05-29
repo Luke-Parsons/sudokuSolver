@@ -40,7 +40,7 @@ public class App {
         new AdvanceBruteForce(Sets.newHashSet(new Elimination()), Sets.newHashSet(new AdvanceBlockOut()));
     System.out.print(puzzle);
     try {
-      puzzle.solve(bestStrategy);
+      puzzle.solve(new ZoneWiseElimination());
 //      puzzle.solve(bestStrategy);
 //      System.out.print(puzzle);
     } catch (Exception e) {

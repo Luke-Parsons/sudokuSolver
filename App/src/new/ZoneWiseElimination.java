@@ -1,10 +1,15 @@
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by 
  * @author luke on 29/05/2017.
  */
 public class ZoneWiseElimination implements PuzzleStrategy {
+
+  private Colour colour = Colour.TURQUOISE;
+
 
   @Override
   public void solve(Puzzle puzzle) {
@@ -16,24 +21,32 @@ public class ZoneWiseElimination implements PuzzleStrategy {
     // squares "StrategyHelper.valuesNotEliminated()"
     // set values
 
+
+
   }
 
-  private void zoneWiseElimination(Zone zone){
+  private void zoneWiseElimination(Zone zone) {
 
-    // TODO: 29/05/2017  
     // get the empty position
     Set<Square> emptySquareInZone = StrategyHelper.getAllEmptySquareInZone(zone);
 
     // for each value left to get
     Set<Integer> missingValues = zone.getMissingValues();
-    
-    for (Integer value : missingValues){
-//      emptySquareInZone.parallelStream().filter(square -> StrategyHelper.)
+
+    for (Integer value : missingValues) {
+      List<Square> squares = emptySquareInZone.parallelStream()
+          .filter(square -> StrategyHelper.valuesNotEliminated(square).contains(value))
+          .collect(Collectors.toList());
+      // if value is is contained within the only one of the
+      // squares "StrategyHelper.valuesNotEliminated()"
+      // set values
+      if (squares.size() == 1 && StrategyHelper.canValueGoInSquare(value, squares.get(0))) {
+        squares.get(0).setValue(value, colour);
+
+      }
+
     }
 
-    // if value is is contained within the only one of the
-    // squares "StrategyHelper.valuesNotEliminated()"
-    // set values
 
 
   }
