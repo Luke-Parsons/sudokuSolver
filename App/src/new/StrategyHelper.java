@@ -12,7 +12,12 @@ import java.util.stream.Collectors;
  */
 public abstract class StrategyHelper {
 
-  //
+  // BruteForce ///////////////////////////////////////////////////////////////
+
+  public List<Integer>  numberLeftToGetInPuzzleOrderedByFrequency(Puzzle puzzle){
+    // TODO: 29/05/2017
+    return new ArrayList<>();
+  }
 
   // Elimination ///////////////////////////////////////////////////////////////
 
@@ -42,8 +47,13 @@ public abstract class StrategyHelper {
     return groups;
   }
 
-  public static Set<Square> getOtherUnsetSquaresInThisZone(Group group, Square square) {
-    return group.getOtherSquaresInThisZone(square).parallelStream()
+  public static Set<Square> getAllEmptySquareInZone(Zone zone) {
+    return zone.getSquares().parallelStream().filter(square -> square.getValue() == null)
+        .collect(Collectors.toSet());
+  }
+
+  public static Set<Square> getOtherUnsetSquaresInThisZone(Zone zone, Square square) {
+    return zone.getOtherSquaresInThisZone(square).parallelStream()
         .filter(s -> s.getValue() == null).collect(Collectors.toSet());
   }
 
