@@ -4,6 +4,7 @@ import java.util.Set;
  * Created by 
  * @author luke on 25/05/2017.
  */
+@Deprecated
 public class BlockOut implements SquareStrategy {
 
   private static Colour colour = Colour.YELLOW;

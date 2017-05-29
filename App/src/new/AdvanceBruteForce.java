@@ -11,7 +11,7 @@ public class AdvanceBruteForce implements PuzzleStrategy {
   private static Colour colour = Colour.RED;
 
   private int NUMBER_OF_GUESS = 0;
-  private long TIME_TAKEN_SECS = 0;
+  private long TIME_TAKEN_MIllS = 0;
 
   private Set<SquareStrategy> squareSpeedFactors;
   private Set<PuzzleStrategy> puzzleSpeedFactors;
@@ -32,7 +32,7 @@ public class AdvanceBruteForce implements PuzzleStrategy {
     puzzle = solveRecursively(puzzle);
 
     long stop = System.currentTimeMillis();
-    TIME_TAKEN_SECS = (stop - start) / 1000L;
+    TIME_TAKEN_MIllS = stop - start;
 
     print(puzzle);
   }
@@ -91,7 +91,7 @@ public class AdvanceBruteForce implements PuzzleStrategy {
     puzzle.orderPuzzle();
 
     System.out.print("NUMBER OF GUESS : " + NUMBER_OF_GUESS + "\n");
-    System.out.print("TIME TAKEN SECS : " + TIME_TAKEN_SECS + "\n");
+    System.out.print("TIME TAKEN MILLISECONDS: " + TIME_TAKEN_MIllS + "\n");
     System.out.print(puzzle.toString());
   }
 

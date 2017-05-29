@@ -79,6 +79,13 @@ public class Square {
         .getColourString();
   }
 
+  // for debugging ///////////////////////////////
+
+  //  @Override
+  //  public String toString() {
+  //    return (value == null) ? "0" : value.toString();
+  //  }
+
   //  @Override
   //  public String toString() {
   //    return theNumOfValuesNotEliminated() + "";

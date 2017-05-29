@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
  */
 public abstract class StrategyHelper {
 
+  //
+
   // Elimination ///////////////////////////////////////////////////////////////
 
   public static Set<Integer> valuesNotEliminated(Square square) {
@@ -41,28 +43,27 @@ public abstract class StrategyHelper {
   }
 
   public static Set<Square> getOtherUnsetSquaresInThisZone(Group group, Square square) {
-    return group.getOtherSquaresInThisZone(square).stream().filter(s -> s.getValue() == null)
-        .collect(Collectors.toSet());
+    return group.getOtherSquaresInThisZone(square).parallelStream()
+        .filter(s -> s.getValue() == null).collect(Collectors.toSet());
   }
 
   public static boolean allRowContains(Set<Row> rows, Integer value) {
-    return rows.stream().filter(row -> row.containsValue(value)).collect(Collectors.toSet()).size()
-        == rows.size();
+    return rows.parallelStream().filter(row -> row.containsValue(value))
+        .collect(Collectors.toSet()).size() == rows.size();
   }
 
   public static boolean allColumnContains(Set<Column> columns, Integer value) {
-    return
-        columns.stream().filter(column -> column.containsValue(value)).collect(Collectors.toSet())
-            .size() == columns.size();
+    return columns.parallelStream().filter(column -> column.containsValue(value))
+        .collect(Collectors.toSet()).size() == columns.size();
   }
 
   public static boolean adjacentSquareInRowAreFilled(Square square) {
-    return getAdjacentSquaresInRow(square).stream().filter(s -> s.getValue() == null)
+    return getAdjacentSquaresInRow(square).parallelStream().filter(s -> s.getValue() == null)
         .collect(Collectors.toSet()).size() == 0;
   }
 
   public static boolean adjacentSquareInColumnAreFilled(Square square) {
-    return getAdjacentSquaresInColumn(square).stream().filter(s -> s.getValue() == null)
+    return getAdjacentSquaresInColumn(square).parallelStream().filter(s -> s.getValue() == null)
         .collect(Collectors.toSet()).size() == 0;
   }
 
@@ -74,12 +75,12 @@ public abstract class StrategyHelper {
   }
 
   public static Set<Row> getAdjacentRows(Square square) {
-    return getAdjacentSquaresInColumn(square).stream().map(Square:: getRow)
+    return getAdjacentSquaresInColumn(square).parallelStream().map(Square:: getRow)
         .collect(Collectors.toSet());
   }
 
   public static Set<Column> getAdjacentColumns(Square square) {
-    return getAdjacentSquaresInRow(square).stream().map(Square:: getColumn)
+    return getAdjacentSquaresInRow(square).parallelStream().map(Square:: getColumn)
         .collect(Collectors.toSet());
   }
 
@@ -143,7 +144,7 @@ public abstract class StrategyHelper {
       Group group) {
     Set<Square> emptySquares = group.getEmptySquares();
     Set<Square> squaresWhereValueCanGo =
-        emptySquares.stream().filter(square -> valuesNotEliminated(square).contains(value))
+        emptySquares.parallelStream().filter(square -> valuesNotEliminated(square).contains(value))
             .collect(Collectors.toSet());
     return squaresWhereValueCanGo.stream().map(Square:: getRow).collect(Collectors.toSet()).size()
         <= 1;
@@ -153,10 +154,10 @@ public abstract class StrategyHelper {
       Group group) {
     Set<Square> emptySquares = group.getEmptySquares();
     Set<Square> squaresWhereValueCanGo =
-        emptySquares.stream().filter(square -> valuesNotEliminated(square).contains(value))
+        emptySquares.parallelStream().filter(square -> valuesNotEliminated(square).contains(value))
             .collect(Collectors.toSet());
     return
-        squaresWhereValueCanGo.stream().map(Square:: getColumn).collect(Collectors.toSet()).size()
+        squaresWhereValueCanGo.parallelStream().map(Square:: getColumn).collect(Collectors.toSet()).size()
             <= 1;
   }
 
@@ -184,7 +185,7 @@ public abstract class StrategyHelper {
 
   public static Set<Column> getColumnsThisValueCanGoInOrIsIn(Integer value, Group group) {
     Set<Column> columns =
-        getPotentialSquaresForThisValueInGroup(value, group).stream().map(Square:: getColumn)
+        getPotentialSquaresForThisValueInGroup(value, group).parallelStream().map(Square:: getColumn)
             .collect(Collectors.toSet());
     Square square = getSquareWithValueInGroup(value, group);
     if (square != null) {
@@ -194,8 +195,10 @@ public abstract class StrategyHelper {
   }
 
   public static Set<Square> getPotentialSquaresForThisValueInGroup(Integer value, Group group) {
-    // TODO: 28/05/2017  no working :(
-    return group.getSquares().parallelStream().filter(square -> valuesNotEliminated(square).contains(value))
+    Set<Square> squares = group.getSquares().parallelStream()
+        .filter(square -> valuesNotEliminated(square).contains(value)).collect(Collectors.toSet());
+
+    return squares.parallelStream().filter(square -> square.getValue() == null)
         .collect(Collectors.toSet());
   }
 

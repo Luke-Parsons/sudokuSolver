@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
  */
 public class AdvanceBlockOut implements PuzzleStrategy {
 
-  private static Colour colour = Colour.TURQUOISE;
+  private static Colour colour = Colour.VIOLET;
 
   @Override
   public void solve(Puzzle puzzle) {
@@ -57,13 +57,13 @@ public class AdvanceBlockOut implements PuzzleStrategy {
     ArrayList<Group> verticallyGroups =
         new ArrayList<>(StrategyHelper.getOtherGroupsVertically(thisGroup));
 
-    Group h1 = horizontallyGroups.get(0);
-    Group h2 = horizontallyGroups.get(1);
+    Group h1 = horizontallyGroups.get(0); // good
+    Group h2 = horizontallyGroups.get(1); // good
 
-    Group v1 = verticallyGroups.get(0);
-    Group v2 = verticallyGroups.get(1);
+    Group v1 = verticallyGroups.get(0);  // good
+    Group v2 = verticallyGroups.get(1);  // good
 
-    for (Integer value : thisGroup.getMissingValues()) {
+    for (Integer value : thisGroup.getMissingValues()) { // good
 
       // set rowsBlockOut
       HashSet<Row> rowsBlockedOut = new HashSet<>();
@@ -129,11 +129,11 @@ public class AdvanceBlockOut implements PuzzleStrategy {
           StrategyHelper.getPotentialSquaresForThisValueInGroup(value, thisGroup);
 
       // canGo.remove any square which has a row which is in rowsBlockOut
-      potentialSquaresForValue = potentialSquaresForValue.stream()
+      potentialSquaresForValue = potentialSquaresForValue.parallelStream()
           .filter(square -> !rowsBlockedOut.contains(square.getRow())).collect(Collectors.toSet());
 
       // canGo.remove any square which has a column which is in columnsBlockOut
-      potentialSquaresForValue = potentialSquaresForValue.stream()
+      potentialSquaresForValue = potentialSquaresForValue.parallelStream()
           .filter(square -> !columnBlockedOut.contains(square.getColumn()))
           .collect(Collectors.toSet());
 

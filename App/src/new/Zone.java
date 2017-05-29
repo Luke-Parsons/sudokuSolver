@@ -39,13 +39,10 @@ public abstract class Zone {
   }
 
   public Set<Integer> getMissingValues() {
-    Set<Integer> missingValues = new HashSet<>();
-    for (Integer i = 1; i <= 9; i++) {
-      if (!map.values().stream().map(Square:: getValue).collect(Collectors.toList()).contains(i)) {
-        missingValues.add(i);
-      }
-    }
-    return missingValues;
+    Set<Integer> missingValues = Sets.newHashSet(1, 2, 3, 4, 5, 6, 7, 8, 9);
+    return missingValues.parallelStream().filter(
+        integer -> !map.values().stream().map(Square:: getValue)
+            .collect(Collectors.toSet()).contains(integer)).collect(Collectors.toSet());
   }
 
   public Set<Integer> getValues() {
