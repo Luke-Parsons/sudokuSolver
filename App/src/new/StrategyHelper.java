@@ -12,6 +12,17 @@ import java.util.stream.Collectors;
  */
 public abstract class StrategyHelper {
 
+  public static Set<Zone> getAllZones(Puzzle puzzle) {
+
+    Set<Zone> zones = new HashSet<>();
+
+    puzzle.getSquares().forEach(square -> zones
+        .addAll(Sets.newHashSet(square.getGroup(), square.getColumn(), square.getRow())));
+
+    return zones;
+  }
+
+
   // BruteForce ///////////////////////////////////////////////////////////////
 
   public List<Integer>  numberLeftToGetInPuzzleOrderedByFrequency(Puzzle puzzle){

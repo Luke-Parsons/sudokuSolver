@@ -37,11 +37,12 @@ public class App {
     Puzzle puzzle = PuzzleBuilder.build(worldHardest);
 
     AdvanceBruteForce bestStrategy =
-        new AdvanceBruteForce(Sets.newHashSet(new Elimination()), Sets.newHashSet(new AdvanceBlockOut()));
+        new AdvanceBruteForce(Sets.newHashSet(new Elimination()), Sets.newHashSet(new
+            ZoneWiseElimination(), new AdvanceBlockOut()));
     System.out.print(puzzle);
     try {
-      puzzle.solve(new ZoneWiseElimination());
-//      puzzle.solve(bestStrategy);
+//      puzzle.solve(new ZoneWiseElimination());
+      puzzle.solve(bestStrategy);
 //      System.out.print(puzzle);
     } catch (Exception e) {
       System.err.print("ERROR: \n");

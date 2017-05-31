@@ -10,19 +10,19 @@ public class ZoneWiseElimination implements PuzzleStrategy {
 
   private Colour colour = Colour.TURQUOISE;
 
-
   @Override
   public void solve(Puzzle puzzle) {
-    // TODO: 29/05/2017
-// consider each zone in turn
-// get the empty position
-// for each value left to get
-// if value is is contained within the only one of the
+
+    // consider each zone in turn
+    // get the empty position
+    // for each value left to get
+    // if value is is contained within the only one of the
     // squares "StrategyHelper.valuesNotEliminated()"
     // set values
 
+    Set<Zone> allZones = StrategyHelper.getAllZones(puzzle);
 
-
+    allZones.forEach(this :: zoneWiseElimination);
   }
 
   private void zoneWiseElimination(Zone zone) {
@@ -46,8 +46,6 @@ public class ZoneWiseElimination implements PuzzleStrategy {
       }
 
     }
-
-
 
   }
 }
