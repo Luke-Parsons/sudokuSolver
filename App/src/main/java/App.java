@@ -4,8 +4,8 @@ import puzzle.Puzzle;
 import puzzle.PuzzleBuilder;
 import strategies.puzzlestrategies.AdvanceBlockOut;
 import strategies.puzzlestrategies.AdvanceBruteForce;
-import strategies.squarestrategies.Elimination;
 import strategies.puzzlestrategies.ZoneWiseElimination;
+import strategies.squarestrategies.Elimination;
 
 /**
  * Created by 
