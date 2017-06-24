@@ -1,6 +1,14 @@
+package strategies.puzzlestrategies;
+
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import puzzle.Puzzle;
+import puzzle.Square;
+import puzzle.Zone;
+import strategies.Colour;
+import strategies.StrategyHelper;
 
 /**
  * Created by 

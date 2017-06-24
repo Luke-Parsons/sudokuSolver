@@ -1,7 +1,17 @@
+package strategies.puzzlestrategies;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import puzzle.Column;
+import puzzle.Group;
+import puzzle.Puzzle;
+import puzzle.Row;
+import puzzle.Square;
+import strategies.Colour;
+import strategies.StrategyHelper;
 
 /**
  * Created by 

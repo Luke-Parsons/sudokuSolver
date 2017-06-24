@@ -1,4 +1,12 @@
+package strategies.puzzlestrategies;
+
 import com.google.common.collect.Sets;
+
+import puzzle.Puzzle;
+import puzzle.PuzzleBuilder;
+import puzzle.Square;
+import strategies.Colour;
+import strategies.StrategyHelper;
 
 /**
  * Created by 

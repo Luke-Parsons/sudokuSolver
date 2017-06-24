@@ -1,6 +1,13 @@
+package puzzle;
+
 import com.google.common.collect.Sets;
 
 import java.util.List;
+
+import strategies.puzzlestrategies.PuzzleStrategy;
+import strategies.squarestrategies.SquareStrategy;
+import strategies.wrappers.PuzzleStrategyWrapper;
+import strategies.wrappers.SquareStrategyWrapper;
 
 /**
  * Created by 
@@ -12,7 +19,6 @@ public class Puzzle implements Cloneable {
 
   public Puzzle(List<Square> squares) {
     this.squares = squares;
-
   }
 
   public void solve(SquareStrategy squareStrategy) {
@@ -51,9 +57,10 @@ public class Puzzle implements Cloneable {
     squares.sort((o1, o2) -> {
       if (o1.getPosition().getPositionInPuzzle() < o2.getPosition().getPositionInPuzzle()) {
         return -1;
-      } else {
+      } else if (o1.getPosition().getPositionInPuzzle() > o2.getPosition().getPositionInPuzzle()) {
         return 1;
       }
+      return 0;
     });
   }
 
@@ -67,7 +74,7 @@ public class Puzzle implements Cloneable {
               || square.getPosition().getPositionInColumn() == 7)) {
         out.append("------|------|------\n");
       }
-      out.append("" + square.toString() + " ");
+      out.append("").append(square.toString()).append(" ");
       if (square.getPosition().getPositionInRow() == 9) {
         out.append("\n");
       }

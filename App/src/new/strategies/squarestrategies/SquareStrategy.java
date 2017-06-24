@@ -1,4 +1,6 @@
+package strategies.squarestrategies;
 
+import puzzle.Square;
 
 /**
  * Created by 

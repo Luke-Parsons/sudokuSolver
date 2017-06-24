@@ -1,3 +1,7 @@
+package strategies.puzzlestrategies;
+
+import puzzle.Puzzle;
+
 /**
  * Created by 
  * @author luke on 27/05/2017.

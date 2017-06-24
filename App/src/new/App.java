@@ -1,5 +1,12 @@
 import com.google.common.collect.Sets;
 
+import puzzle.Puzzle;
+import puzzle.PuzzleBuilder;
+import strategies.puzzlestrategies.AdvanceBlockOut;
+import strategies.puzzlestrategies.AdvanceBruteForce;
+import strategies.squarestrategies.Elimination;
+import strategies.puzzlestrategies.ZoneWiseElimination;
+
 /**
  * Created by 
  * @author luke on 23/05/2017.
@@ -20,7 +27,8 @@ public class App {
           + "?,7,?,?,?,6,?,7,2,8,1";
 
   private static String worldHardest = "8,?,?,?,?,?,?,?,?,?,?,3,6,?,?,?,?,?,?,7,?,?,9,?,2,?,?,?,"
-      + "5,?,?,?,7,?,?,?,?,?,?,?,4,5,7,?,?,?,?,?,1,?,?,?,3,?,?,?,1,?,?,?,?,6,8,?,?,8,5,?,?,?,1,?,?,9,?,?,?,?,4,?,?";
+      + "5,?,?,?,7,?,?,?,?,?,?,?,4,5,7,?,?,?,?,?,1,?,?,?,3,?,?,?,1,?,?,?,?,6,8,?,?,8,5,?,?,?,1,?,"
+      + "?,9,?,?,?,?,4,?,?";
 
   public static void main(String[] args) throws InterruptedException {
 
@@ -37,13 +45,15 @@ public class App {
     Puzzle puzzle = PuzzleBuilder.build(worldHardest);
 
     AdvanceBruteForce bestStrategy =
-        new AdvanceBruteForce(Sets.newHashSet(new Elimination()), Sets.newHashSet(new
-            ZoneWiseElimination(), new AdvanceBlockOut()));
+        new AdvanceBruteForce(
+            Sets.newHashSet(new Elimination()),
+            Sets.newHashSet(new ZoneWiseElimination(), new AdvanceBlockOut()));
+
     System.out.print(puzzle);
     try {
-//      puzzle.solve(new ZoneWiseElimination());
+      //      puzzle.solve(new ZoneWiseElimination());
       puzzle.solve(bestStrategy);
-//      System.out.print(puzzle);
+      //      System.out.print(puzzle);
     } catch (Exception e) {
       System.err.print("ERROR: \n");
       System.out.print(puzzle.toString());

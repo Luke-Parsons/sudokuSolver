@@ -1,3 +1,5 @@
+package strategies;
+
 import com.google.common.collect.Sets;
 
 import java.util.ArrayList;
@@ -5,6 +7,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import puzzle.Column;
+import puzzle.Group;
+import puzzle.Puzzle;
+import puzzle.Row;
+import puzzle.Square;
+import puzzle.Zone;
 
 /**
  * Created by 
@@ -22,10 +31,9 @@ public abstract class StrategyHelper {
     return zones;
   }
 
-
   // BruteForce ///////////////////////////////////////////////////////////////
 
-  public List<Integer>  numberLeftToGetInPuzzleOrderedByFrequency(Puzzle puzzle){
+  public List<Integer> numberLeftToGetInPuzzleOrderedByFrequency(Puzzle puzzle) {
     // TODO: 29/05/2017
     return new ArrayList<>();
   }
@@ -64,13 +72,13 @@ public abstract class StrategyHelper {
   }
 
   public static Set<Square> getOtherUnsetSquaresInThisZone(Zone zone, Square square) {
-    return zone.getOtherSquaresInThisZone(square).parallelStream()
-        .filter(s -> s.getValue() == null).collect(Collectors.toSet());
+    return zone.getOtherSquaresInThisZone(square).parallelStream().filter(s -> s.getValue() == null)
+        .collect(Collectors.toSet());
   }
 
   public static boolean allRowContains(Set<Row> rows, Integer value) {
-    return rows.parallelStream().filter(row -> row.containsValue(value))
-        .collect(Collectors.toSet()).size() == rows.size();
+    return rows.parallelStream().filter(row -> row.containsValue(value)).collect(Collectors.toSet())
+        .size() == rows.size();
   }
 
   public static boolean allColumnContains(Set<Column> columns, Integer value) {
@@ -178,8 +186,8 @@ public abstract class StrategyHelper {
         emptySquares.parallelStream().filter(square -> valuesNotEliminated(square).contains(value))
             .collect(Collectors.toSet());
     return
-        squaresWhereValueCanGo.parallelStream().map(Square:: getColumn).collect(Collectors.toSet()).size()
-            <= 1;
+        squaresWhereValueCanGo.parallelStream().map(Square:: getColumn).collect(Collectors.toSet())
+            .size() <= 1;
   }
 
   public static boolean isThisSolvable(Puzzle puzzle) {
@@ -205,9 +213,8 @@ public abstract class StrategyHelper {
   }
 
   public static Set<Column> getColumnsThisValueCanGoInOrIsIn(Integer value, Group group) {
-    Set<Column> columns =
-        getPotentialSquaresForThisValueInGroup(value, group).parallelStream().map(Square:: getColumn)
-            .collect(Collectors.toSet());
+    Set<Column> columns = getPotentialSquaresForThisValueInGroup(value, group).parallelStream()
+        .map(Square:: getColumn).collect(Collectors.toSet());
     Square square = getSquareWithValueInGroup(value, group);
     if (square != null) {
       columns.add(square.getColumn());

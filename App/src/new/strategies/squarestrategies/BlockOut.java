@@ -1,4 +1,10 @@
+package strategies.squarestrategies;
+
 import java.util.Set;
+
+import puzzle.Square;
+import strategies.Colour;
+import strategies.StrategyHelper;
 
 /**
  * Created by 

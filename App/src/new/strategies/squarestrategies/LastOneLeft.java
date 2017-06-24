@@ -1,4 +1,7 @@
+package strategies.squarestrategies;
 
+import puzzle.Square;
+import strategies.Colour;
 
 /**
  * Created by 

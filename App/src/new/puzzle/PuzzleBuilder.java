@@ -1,3 +1,5 @@
+package puzzle;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -155,7 +157,6 @@ public class PuzzleBuilder {
     newPuzzle.orderPuzzle();
 
     return newPuzzle;
-
   }
 
 

@@ -1,3 +1,4 @@
+package puzzle;
 
 /**
  * Created by 
@@ -6,7 +7,7 @@
 public class Row extends Zone {
 
   @Override
-  protected void addSquare(Square square) {
+  public void addSquare(Square square) {
     map.put(square.getPosition().getPositionInRow(), square);
   }
 }

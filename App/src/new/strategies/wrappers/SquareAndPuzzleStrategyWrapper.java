@@ -1,10 +1,18 @@
+package strategies.wrappers;
+
 import java.util.Set;
+
+import puzzle.Puzzle;
+import puzzle.Square;
+import strategies.puzzlestrategies.PuzzleStrategy;
+import strategies.squarestrategies.SquareStrategy;
+import strategies.StrategyHelper;
 
 /**
  * Created by 
  * @author luke on 28/05/2017.
  */
-public class SquareAndPuzzleStrategyWrapper implements PuzzleStrategy{
+public class SquareAndPuzzleStrategyWrapper implements PuzzleStrategy {
 
   Set<SquareStrategy> squareStrategies;
   Set<PuzzleStrategy> puzzleStrategies;

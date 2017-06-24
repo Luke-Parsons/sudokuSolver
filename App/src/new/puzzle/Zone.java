@@ -1,3 +1,4 @@
+package puzzle;
 
 import com.google.common.collect.Sets;
 
@@ -18,12 +19,12 @@ public abstract class Zone {
    */
   protected Map<Integer, Square> map = new HashMap<>();
 
-  protected boolean containsValue(Integer value) {
+  public boolean containsValue(Integer value) {
     return map.values().stream().map(Square:: getValue).collect(Collectors.toList())
         .contains(value);
   }
 
-  protected abstract void addSquare(Square square);
+  public abstract void addSquare(Square square);
 
   public boolean hasOneSquareLeft() {
     return getValues().size() == 8;

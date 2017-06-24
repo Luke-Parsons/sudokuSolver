@@ -1,4 +1,12 @@
+package strategies.wrappers;
+
 import java.util.Set;
+
+import puzzle.Puzzle;
+import puzzle.Square;
+import strategies.puzzlestrategies.PuzzleStrategy;
+import strategies.squarestrategies.SquareStrategy;
+import strategies.StrategyHelper;
 
 /**
  * Created by 

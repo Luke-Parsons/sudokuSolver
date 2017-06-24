@@ -1,3 +1,8 @@
+package puzzle;
+
+import strategies.Colour;
+import strategies.StrategyHelper;
+
 /**
  * Created by 
  * @author luke on 21/05/2017.
